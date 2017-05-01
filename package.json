@@ -10,7 +10,7 @@
     "build-css-dev": "node-sass -w assets/stylesheets/styles.scss -o public/stylesheets",
     "build-frontend-dev": "webpack -w",
     "build-dev": "concurrently --kill-others \"npm run build-css-dev\" \"npm run build-frontend-dev\"",
-    "start-dev": "concurrently --kill-others \"nodemon -e js ./server/index.js\" \"npm run build-dev\"",
+    "start-dev": "concurrently --kill-others \"npm run build-dev\" \"nodemon -e js ./server/index.js\"",
     "build": "concurrently --kill-others \"npm run build-css\" \"npm run build-frontend\"",
     "start": "node ./server/index.js"
   },
@@ -26,13 +26,16 @@
     "babel-preset-react": "^6.24.1",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
+    "bootstrap": "^3.3.7",
     "chai": "^3.5.0",
     "concurrently": "^3.4.0",
     "enzyme": "^2.8.2",
     "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "jquery": "^3.2.1",
     "mocha": "^3.3.0",
     "node-sass": "^4.5.2",
-    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "react": "^15.5.4",
@@ -44,5 +47,8 @@
     "session": "^0.1.0",
     "volleyball": "^1.4.1",
     "webpack": "^2.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
