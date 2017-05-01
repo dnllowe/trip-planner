@@ -6,6 +6,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const volleyball = require('volleyball')
 
+const db = require('./db')
+
 const PORT = 3000
 
 // Logging middleware
@@ -24,8 +26,11 @@ app.use('/bootstrap.min.css.map', express.static(path.join(__dirname, '../node_m
 app.use('/react.min.js', express.static(path.join(__dirname, '../node_modules/react/dist/react.min.js')));
 app.use('/reactDom.min.js', express.static(path.join(__dirname, '../node_modules/react-dom/dist/react-dom.min.js')));
 
-
+// Sync database models
+db.sync({ force: true })
+.then(() => {
 // Start server
-app.listen(PORT, () => {
-  console.log('Listening on port', PORT)
+  app.listen(PORT, () => {
+    console.log('Listening on port', PORT)
+  })
 })
