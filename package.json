@@ -4,7 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --watch test/**.js",
+    "build-css": "node-sass assets/stylesheets/styles.scss -o public/stylesheets",
+    "build-frontend": "webpack",
+    "build-css-dev": "node-sass -w assets/stylesheets/styles.scss -o public/stylesheets",
+    "build-frontend-dev": "webpack -w",
+    "build-dev": "concurrently --kill-others \"npm run build-css-dev\" \"npm run build-frontend-dev\"",
+    "start-dev": "concurrently --kill-others \"nodemon -e js ./server/index.js\" \"npm run build-dev\"",
+    "build": "concurrently --kill-others \"npm run build-css\" \"npm run build-frontend\"",
+    "start": "node ./server/index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +27,7 @@
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "chai": "^3.5.0",
+    "concurrently": "^3.4.0",
     "enzyme": "^2.8.2",
     "express": "^4.15.2",
     "mocha": "^3.3.0",
