@@ -60,10 +60,11 @@ const activities = [
   {name: "Strand Bookstore", address: "828 Broadway", city: "New York", state: "NY", phone: "123-456-7890", location: [40.733274, -73.990870], age_range: "All" }
 ]
 
-const numberOfNYImages = 11
+const numberOfNYImages = 12
+const nyBackgrounds = []
 
 for(let iii = 1; iii <= numberOfNYImages; iii++) {
-    nyBackgrounds.push(`url(/images/ny-${iii}.jpg)`);
+    nyBackgrounds.push(`url(/images/destinations/ny/ny-${iii}.jpg)`);
 }
 
 const destinations = [
