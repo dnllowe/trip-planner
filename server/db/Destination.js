@@ -11,6 +11,9 @@ const Destination = db.define('destination', {
   location: {
     type: Sequelize.ARRAY(Sequelize.DOUBLE),
     allowNull: false
+  },
+  imageUrls: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 })
 

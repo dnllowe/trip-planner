@@ -15,6 +15,9 @@ const Hotel = db.define('hotel',  {
       max: 5,
     }
   },
+  imageUrl: {
+    type: Sequelize.STRING
+  },
   address: {
     type: Sequelize.STRING,
     allowNull: false
