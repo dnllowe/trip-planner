@@ -2,9 +2,13 @@
 
 import React from 'react'
 
+import DestinationSelectorContainer from './DestinationSelectorContainer'
+
 const Home = () => {
   return (
-    <div>Hello React Trip Planner Home!</div>
+    <div>
+      <DestinationSelectorContainer />
+    </div>
   )
 }
 
