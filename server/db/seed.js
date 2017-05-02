@@ -8,7 +8,6 @@ const Hotel = db.models.hotel
 const Restaurant = db.models.restaurant
 const Activity = db.models.activity
 
-console.log(db.models.hotel)
 const hotels = [
   {name: "Andaz Wall Street", address: "75 Wall St", city: "New York", state: "NY", phone: "123-456-7890", location: [40.705137, -74.007624], num_stars: 4, amenities: "Pool, Free Wi-Fi" },
   {name: "Hotel Mulberry", address: "52 Mulberry St", city: "New York", state: "NY", phone: "123-456-7890", location: [40.715317, -73.999542], num_stars: 4.5, amenities: "Free Wi-Fi" },
