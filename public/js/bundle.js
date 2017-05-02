@@ -11053,13 +11053,17 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _DestinationSelectorContainer = __webpack_require__(225);
+
+var _DestinationSelectorContainer2 = _interopRequireDefault(_DestinationSelectorContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Home = function Home() {
   return _react2.default.createElement(
     'div',
     null,
-    'Hello React Trip Planner Home!'
+    _react2.default.createElement(_DestinationSelectorContainer2.default, null)
   );
 };
 
@@ -25375,6 +25379,161 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DestinationSelector = function DestinationSelector(props) {
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'form',
+      { id: 'tripDetails', onSubmit: props.handleSubmit, onChange: props.updateDestination },
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { id: 'lightbox-landing-page', className: 'col-sm-6 col-sm-offset-3 col-xs-12 lightbox center-text' },
+          _react2.default.createElement(
+            'div',
+            { id: 'cities' },
+            _react2.default.createElement(
+              'h1',
+              { id: 'intro', className: 'bold-text white-text' },
+              'Where Are You Going?'
+            ),
+            _react2.default.createElement(
+              'select',
+              { id: 'citySelection', name: 'citySelection' },
+              _react2.default.createElement(
+                'option',
+                { value: 'default' },
+                'Don\'t know, yet...'
+              )
+            )
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'div',
+            { id: 'activities', name: 'activities', className: 'hide' },
+            _react2.default.createElement(
+              'h3',
+              { className: 'bold-text white-text', id: 'whatToDo' },
+              'DYNAMIC TEXT'
+            ),
+            _react2.default.createElement('ul', { className: 'activity-list' })
+          )
+        ),
+        _react2.default.createElement('div', { className: 'col-sm-3' })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-xs-12 center-text' },
+          _react2.default.createElement(
+            'button',
+            { id: 'submit-landing-page', className: 'hide', value: 'Plan My Trip!' },
+            'Plan My Trip!'
+          )
+        )
+      )
+    )
+  );
+};
+
+exports.default = DestinationSelector;
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _DestinationSelector = __webpack_require__(224);
+
+var _DestinationSelector2 = _interopRequireDefault(_DestinationSelector);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DestinationSelectorContainer = function (_React$Component) {
+  _inherits(DestinationSelectorContainer, _React$Component);
+
+  function DestinationSelectorContainer() {
+    _classCallCheck(this, DestinationSelectorContainer);
+
+    var _this = _possibleConstructorReturn(this, (DestinationSelectorContainer.__proto__ || Object.getPrototypeOf(DestinationSelectorContainer)).call(this));
+
+    _this.state = {
+      destinationSelection: null
+    };
+
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.updateDestination = _this.updateDestination.bind(_this);
+    return _this;
+  }
+
+  _createClass(DestinationSelectorContainer, [{
+    key: 'updateDestination',
+    value: function updateDestination(destination) {
+      this.setState({ destinationSelect: destination });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      console.log("SUBMISSION");
+      event.preventDefault();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_DestinationSelector2.default, {
+        handleSubmit: this.handleSubmit,
+        updateDestination: this.updateDestination
+      });
+    }
+  }]);
+
+  return DestinationSelectorContainer;
+}(_react2.default.Component);
+
+exports.default = DestinationSelectorContainer;
 
 /***/ })
 /******/ ]);
