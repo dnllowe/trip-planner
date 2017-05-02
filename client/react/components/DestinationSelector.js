@@ -13,7 +13,18 @@ const DestinationSelector = (props) => {
               <h1 id='intro' className='bold-text white-text'>Where Are You Going?</h1>
               <select id='citySelection' name='citySelection'>
                 <option value="default">Don't know, yet...</option>
-                {/* ADD REACT JSX FOR DESTINATIONS*/}
+
+                {/*MAP OVER DESTINATIONS TO GET OPTION VALUES FOR FORM*/}
+                {props.destinations &&
+                  props.destinations.map(destination => {
+                  return (
+                    <option
+                      value={destination.name}
+                      key={destination.name}>
+                      {destination.name}
+                    </option>
+                  )
+                })}
               </select>
             </div>
             <br />
