@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const volleyball = require('volleyball')
 
 const db = require('./db')
+const router = require('./routes')
 
 const PORT = 3000
 
@@ -26,8 +27,11 @@ app.use('/bootstrap.min.css.map', express.static(path.join(__dirname, '../node_m
 app.use('/react.min.js', express.static(path.join(__dirname, '../node_modules/react/dist/react.min.js')));
 app.use('/reactDom.min.js', express.static(path.join(__dirname, '../node_modules/react-dom/dist/react-dom.min.js')));
 
+// API routes
+app.use('/api', router)
+
 // Sync database models
-db.sync({ force: true })
+db.sync()
 .then(() => {
 // Start server
   app.listen(PORT, () => {
