@@ -12,7 +12,8 @@
     "build-dev": "concurrently --kill-others \"npm run build-css-dev\" \"npm run build-frontend-dev\"",
     "start-dev": "concurrently --kill-others \"npm run build-dev\" \"nodemon -e js ./server/index.js\"",
     "build": "concurrently --kill-others \"npm run build-css\" \"npm run build-frontend\"",
-    "start": "node ./server/index.js"
+    "start": "node ./server/index.js",
+    "seed": "node ./server/db/seed.js"
   },
   "keywords": [],
   "author": "",
