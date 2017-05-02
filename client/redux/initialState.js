@@ -1,11 +1,11 @@
 'use strict'
 
 const initialState = {
-  destination: [],
-  day: [],
-  restaurant: [],
-  hotel: [],
-  activity: []
+  destinations: [],
+  days: [],
+  restaurants: [],
+  hotels: [],
+  activities: []
 }
 
 export default initialState
