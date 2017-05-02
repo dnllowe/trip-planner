@@ -59,8 +59,26 @@ const activities = [
   {name: "Union Square Holiday Market", address: "Union Sq & W 14th St", city: "New York", state: "NY", phone: "123-456-7890", location: [40.733615, -73.987995], age_range: "All" },
   {name: "Strand Bookstore", address: "828 Broadway", city: "New York", state: "NY", phone: "123-456-7890", location: [40.733274, -73.990870], age_range: "All" }
 ]
+
+const numberOfNYImages = 11
+
+for(let iii = 1; iii <= numberOfNYImages; iii++) {
+    nyBackgrounds.push(`url(/images/ny-${iii}.jpg)`);
+}
+
 const destinations = [
-  { name: "New York", location: [40.709102, -74.013997] }
+  {name: "New York", location: [40.758668, -73.985154], imageUrls: nyBackgrounds},
+  {name: "Atlanta", location: [33.749366, -84.392462]},
+  {name: "Austin", location: [30.267144, -97.735592]},
+  {name: "Charleston", location: [32.777102, -79.939590]},
+  {name: "Chicago", location: [41.877376, -87.638809]},
+  {name: "Hawaii", location: [21.461306, -157.969824]},
+  {name: "Los Angeles", location: [34.050908, -118.260712]},
+  {name: "San Diego", location: [32.711074, -117.161124]},
+  {name: "San Francisco", location: [37.774506, -122.417690]},
+  {name: "Tokyo", location: [35.726793, 139.727544]},
+  {name: "Vegas", location: [36.169276, -115.124198]},
+  {name: "Venice", location: [45.436166, 12.315790]}
 ]
 
 db.sync({force: true})
