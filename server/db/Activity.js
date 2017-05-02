@@ -8,6 +8,9 @@ const Activity = db.define('activity', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  imageUrl: {
+    type: Sequelize.STRING
+  },
   address: {
     type: Sequelize.STRING,
     allowNull: false

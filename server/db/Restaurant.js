@@ -8,6 +8,9 @@ const Restaurant = db.define('restaurant', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  imageUrl: {
+    type: Sequelize.STRING
+  },
   address: {
     type: Sequelize.STRING,
     allowNull: false
