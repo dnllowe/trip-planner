@@ -17,6 +17,9 @@ const reducer = (prevState = initialState, action) => {
     case actions.SET_BACKGROUND_IMAGE:
       newState.bgImage = action.imageUrl
       break
+    case actions.SET_RESTAURANTS:
+      newState.restaurants = action.restaurants
+      break
     default:
       return prevState
   }
