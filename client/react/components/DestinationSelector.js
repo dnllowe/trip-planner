@@ -29,19 +29,25 @@ const DestinationSelector = (props) => {
             </div>
             <br />
             <br />
-            <div id='activities' name='activities' className='hide'>
-              <h3 className='bold-text white-text' id='whatToDo'>DYNAMIC TEXT</h3>
-              <ul className='activity-list'>
-                {/*ADD REACT JSX FOR ACTIVITY LIST*/}
-              </ul>
-            </div>
+            {props.selection &&
+              <div id='activities' name='activities'>
+                <h3 className='bold-text white-text' id='whatToDo'>
+                  What Do You Want to Do in {props.selection.name}?
+                </h3>
+                <ul className='activity-list'>
+                  {/*ADD REACT JSX FOR ACTIVITY LIST*/}
+                </ul>
+              </div>
+            }
           </div>
           <div className='col-sm-3'></div>
         </div>
         <div className='row'>
-          <div className='col-xs-12 center-text'>
-            <button id='submit-landing-page' className='hide' value='Plan My Trip!'>Plan My Trip!</button>
-          </div>
+          {props.selection &&
+            <div className='col-xs-12 center-text'>
+              <button id='submit-landing-page' value='Plan My Trip!'>Plan My Trip!</button>
+            </div>
+          }
         </div>
       </form>
     </div>

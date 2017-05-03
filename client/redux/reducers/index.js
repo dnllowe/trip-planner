@@ -11,6 +11,12 @@ const reducer = (prevState = initialState, action) => {
     case actions.LOAD_DESTINATIONS:
       newState.destinations = action.destinations
       break
+    case actions.SET_DESTINATION:
+      newState.currentDestination = action.destination
+      break
+    case actions.SET_BACKGROUND_IMAGE:
+      newState.bgImage = action.imageUrl
+      break
     default:
       return prevState
   }

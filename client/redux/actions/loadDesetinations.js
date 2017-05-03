@@ -8,7 +8,6 @@ const fetchingDestinations = () => {
     axios.get('/api/destination')
       .then(res => res.data)
       .then(destinations => {
-        console.log(destinations)
         dispatch(loadDestinations(destinations))
     })
   }
