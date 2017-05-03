@@ -8,7 +8,9 @@ import DestinationSelector from '../components/DestinationSelector.js'
 import loadDestinations from '../../redux/actions/loadDesetinations'
 import setDestination from '../../redux/actions/setDestination'
 import setBackgroundImage from '../../redux/actions/setBackgroundImage'
+import setHotels from '../../redux/actions/setHotels'
 import setRestaurants from '../../redux/actions/setRestaurants'
+import setActivities from '../../redux/actions/setActivities'
 
 class DestinationSelectorContainer extends React.Component {
 
@@ -31,9 +33,12 @@ class DestinationSelectorContainer extends React.Component {
   }
 
   updateDestination(event) {
-    store.dispatch(setDestination(event.target.value))
-    store.dispatch(setBackgroundImage(event.target.value))
-    store.dispatch(setRestaurants(event.target.value))
+    const destinationName = event.target.value
+    store.dispatch(setDestination(destinationName))
+    store.dispatch(setBackgroundImage(destinationName))
+    store.dispatch(setHotels(destinationName))
+    store.dispatch(setRestaurants(destinationName))
+    store.dispatch(setActivities(destinationName))
   }
 
   handleSubmit(event) {
