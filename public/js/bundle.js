@@ -13111,6 +13111,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var DestinationSelector = function DestinationSelector(props) {
 
   return _react2.default.createElement(
@@ -13135,7 +13137,7 @@ var DestinationSelector = function DestinationSelector(props) {
             ),
             _react2.default.createElement(
               'select',
-              { id: 'citySelection', name: 'citySelection' },
+              { id: 'city', name: 'city' },
               _react2.default.createElement(
                 'option',
                 { value: 'default' },
@@ -13160,11 +13162,27 @@ var DestinationSelector = function DestinationSelector(props) {
             _react2.default.createElement(
               'h3',
               { className: 'bold-text white-text', id: 'whatToDo' },
-              'What Do You Want to Do in ',
-              props.selection.name,
-              '?'
+              props.prompt
             ),
-            _react2.default.createElement('ul', { className: 'activity-list' })
+            _react2.default.createElement(
+              'ul',
+              { className: 'activity-list' },
+              props.activities && props.activities.map(function (activity) {
+                return _react2.default.createElement(
+                  'li',
+                  { key: activity.name },
+                  _react2.default.createElement('input', _defineProperty({
+                    type: 'checkbox',
+                    name: 'activity',
+                    onClick: props.updateCheckbox,
+                    id: activity.name.replace(/\s+/g, '-'),
+                    value: activity.name.replace(/\s+/g, '-')
+                  }, 'id', activity.name.replace(/\s+/g, '-'))),
+                  _react2.default.createElement('label', { htmlFor: activity.name.replace(/\s+/g, '-') }),
+                  activity.name
+                );
+              })
+            )
           )
         ),
         _react2.default.createElement('div', { className: 'col-sm-3' })
@@ -13258,8 +13276,11 @@ var DestinationSelectorContainer = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (DestinationSelectorContainer.__proto__ || Object.getPrototypeOf(DestinationSelectorContainer)).call(this));
 
     _this.state = _store2.default.getState();
+    _this.totalCheckedBoxes = 0;
+    _this.state.prompt = null;
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.updateDestination = _this.updateDestination.bind(_this);
+    _this.updateCheckbox = _this.updateCheckbox.bind(_this);
     return _this;
   }
 
@@ -13269,8 +13290,13 @@ var DestinationSelectorContainer = function (_React$Component) {
       var _this2 = this;
 
       this.unsubscribe = _store2.default.subscribe(function () {
-        _this2.setState(_store2.default.getState());
+
+        // Keep track of properties that aren't on store state
+        var newState = _store2.default.getState();
+        newState.prompt = _this2.state.prompt;
+        _this2.setState(newState);
       });
+
       _store2.default.dispatch((0, _loadDesetinations2.default)());
     }
   }, {
@@ -13281,12 +13307,66 @@ var DestinationSelectorContainer = function (_React$Component) {
   }, {
     key: 'updateDestination',
     value: function updateDestination(event) {
-      var destinationName = event.target.value;
-      _store2.default.dispatch((0, _setDestination2.default)(destinationName));
-      _store2.default.dispatch((0, _setBackgroundImage2.default)(destinationName));
-      _store2.default.dispatch((0, _setHotels2.default)(destinationName));
-      _store2.default.dispatch((0, _setRestaurants2.default)(destinationName));
-      _store2.default.dispatch((0, _setActivities2.default)(destinationName));
+      if (event.target.name === 'city') {
+        var destinationName = event.target.value;
+        _store2.default.dispatch((0, _setDestination2.default)(destinationName));
+        _store2.default.dispatch((0, _setBackgroundImage2.default)(destinationName));
+        _store2.default.dispatch((0, _setHotels2.default)(destinationName));
+        _store2.default.dispatch((0, _setRestaurants2.default)(destinationName));
+        _store2.default.dispatch((0, _setActivities2.default)(destinationName));
+        this.setState({ prompt: 'What Do You Want to Do in ' + destinationName + '?' });
+      }
+
+      if (event.target.name === 'activity') {
+        var activityName = event.target.value;
+      }
+    }
+  }, {
+    key: 'updateCheckbox',
+    value: function updateCheckbox(event) {
+      var intervalId = null;
+      var checkbox = event.target;
+
+      if (checkbox.checked) {
+        this.totalCheckedBoxes++;
+        checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue";
+      } else {
+        this.totalCheckedBoxes--;
+        checkbox.nextElementSibling.style.backgroundColor = "lightgray";
+      }
+
+      if (this.totalCheckedBoxes === 0) {
+        this.setState({ prompt: 'What Do You Want to Do in ' + _store2.default.getState().currentDestination.name + '?' });
+        // whatToDo.style = "opacity: 0.1";
+
+        // clearInterval(intervalId);
+        // intervalId = setInterval(() => {
+        //     let currentOpacity = parseFloat(whatToDo.style.opacity);
+        //     currentOpacity += 0.01;
+        //     whatToDo.style.opacity = currentOpacity.toString();
+
+        //     if(whatToDo.style.opacity >= 1) {
+        //         clearInterval(intervalId);
+        //     }
+        // }, 1);
+      }
+
+      // Only true when all checkboxes were empty, and this is first to get selected
+      if (this.totalCheckedBoxes === 1 && checkbox.checked) {
+        this.setState({ prompt: "Anything Else?" });
+        // whatToDo.style = "opacity: 0.1";
+
+        // clearInterval(intervalId);
+        // intervalId = setInterval(() => {
+        //     let currentOpacity = parseFloat(whatToDo.style.opacity);
+        //     currentOpacity += 0.01;
+        //     whatToDo.style.opacity = currentOpacity.toString();
+
+        //     if(whatToDo.style.opacity >= 1) {
+        //         clearInterval(intervalId);
+        //     }
+        // }, 1);
+      }
     }
   }, {
     key: 'handleSubmit',
@@ -13299,8 +13379,11 @@ var DestinationSelectorContainer = function (_React$Component) {
       return _react2.default.createElement(_DestinationSelector2.default, {
         handleSubmit: this.handleSubmit,
         updateDestination: this.updateDestination,
+        updateCheckbox: this.updateCheckbox,
         destinations: this.state.destinations,
-        selection: this.state.currentDestination
+        selection: this.state.currentDestination,
+        activities: this.state.activities,
+        prompt: this.state.prompt
       });
     }
   }]);
