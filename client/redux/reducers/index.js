@@ -11,6 +11,21 @@ const reducer = (prevState = initialState, action) => {
     case actions.LOAD_DESTINATIONS:
       newState.destinations = action.destinations
       break
+    case actions.SET_DESTINATION:
+      newState.currentDestination = action.destination
+      break
+    case actions.SET_BACKGROUND_IMAGE:
+      newState.bgImage = action.imageUrl
+      break
+    case actions.SET_HOTELS:
+      newState.hotels = action.hotels
+      break
+    case actions.SET_RESTAURANTS:
+      newState.restaurants = action.restaurants
+      break
+    case actions.SET_ACTIVITIES:
+      newState.activities = action.activities
+      break
     default:
       return prevState
   }
