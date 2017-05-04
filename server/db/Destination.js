@@ -8,6 +8,10 @@ const Destination = db.define('destination', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  isSelected: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   location: {
     type: Sequelize.ARRAY(Sequelize.DOUBLE),
     allowNull: false
