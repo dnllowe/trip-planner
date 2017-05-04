@@ -15,6 +15,10 @@ const Hotel = db.define('hotel',  {
       max: 5,
     }
   },
+  isSelected: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   imageUrl: {
     type: Sequelize.STRING
   },

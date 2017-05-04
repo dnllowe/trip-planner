@@ -7,6 +7,10 @@ const Day = db.define('day', {
   number: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  isSelected: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 }, {
     hooks: {
