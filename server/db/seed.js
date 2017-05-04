@@ -1,6 +1,7 @@
 // This file should contain all the record creation needed to seed the database with its default values.
 // The data can then be loaded with the node seed.js
 
+const fs = require('fs')
 const Promise = require('bluebird')
 const db = require('./index.js')
 const Destination = db.models.destination
@@ -60,18 +61,47 @@ const activities = [
   {name: "Strand Bookstore", address: "828 Broadway", city: "New York", state: "NY", phone: "123-456-7890", location: [40.733274, -73.990870], age_range: "All" }
 ]
 
-const numberOfNYImages = 12
+// Arrays to store filepaths for images
 const nyBackgrounds = []
+const atlBackgrounds = []
+const austinBackgrounds = []
+const charlestonBackgrounds = []
 
-for(let iii = 1; iii <= numberOfNYImages; iii++) {
-    nyBackgrounds.push(`url(/images/destinations/ny/ny-${iii}.jpg)`);
-}
+// Set the background images for each destination
+
+// NEW YORK
+fs.readdir('./public/images/destinations/ny', (error, files) => {
+  files.forEach(file => {
+    nyBackgrounds.push(`url(/images/destinations/ny/${file}`);
+  })
+})
+
+// ATLANTA
+fs.readdir('./public/images/destinations/atl', (error, files) => {
+  files.forEach(file => {
+    atlBackgrounds.push(`url(/images/destinations/atl/${file}`);
+  })
+})
+
+// AUSTIIN
+fs.readdir('./public/images/destinations/austin', (error, files) => {
+  files.forEach(file => {
+    austinBackgrounds.push(`url(/images/destinations/austin/${file}`);
+  })
+})
+
+// CHARLESTON
+fs.readdir('./public/images/destinations/charleston', (error, files) => {
+  files.forEach(file => {
+    charlestonBackgrounds.push(`url(/images/destinations/charleston/${file}`);
+  })
+})
 
 const destinations = [
-  {name: "New York", location: [40.758668, -73.985154], imageUrls: nyBackgrounds},
-  {name: "Atlanta", location: [33.749366, -84.392462]},
-  {name: "Austin", location: [30.267144, -97.735592]},
-  {name: "Charleston", location: [32.777102, -79.939590]},
+  { name: "New York", location: [40.758668, -73.985154], imageUrls: nyBackgrounds },
+  { name: "Atlanta", location: [33.749366, -84.392462], imageUrls: atlBackgrounds },
+  { name: "Austin", location: [30.267144, -97.735592], imageUrls: austinBackgrounds },
+  { name: "Charleston", location: [32.777102, -79.939590], imageUrls: charlestonBackgrounds },
   {name: "Chicago", location: [41.877376, -87.638809]},
   {name: "Hawaii", location: [21.461306, -157.969824]},
   {name: "Los Angeles", location: [34.050908, -118.260712]},
