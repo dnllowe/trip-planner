@@ -13173,7 +13173,8 @@ var DestinationSelector = function DestinationSelector(props) {
                   { key: activity.name },
                   _react2.default.createElement('input', _defineProperty({
                     type: 'checkbox',
-                    name: 'activity',
+                    nameHyphenated: activity.name.replace(/\s+/g, '-'),
+                    name: activity.name,
                     onClick: props.updateCheckbox,
                     id: activity.name.replace(/\s+/g, '-'),
                     value: activity.name.replace(/\s+/g, '-')
@@ -13278,6 +13279,7 @@ var DestinationSelectorContainer = function (_React$Component) {
     _this.state = _store2.default.getState();
     _this.totalCheckedBoxes = 0;
     _this.state.prompt = null;
+    _this.state.activitySelections = [];
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.updateDestination = _this.updateDestination.bind(_this);
     _this.updateCheckbox = _this.updateCheckbox.bind(_this);
@@ -13294,6 +13296,7 @@ var DestinationSelectorContainer = function (_React$Component) {
         // Keep track of properties that aren't on store state
         var newState = _store2.default.getState();
         newState.prompt = _this2.state.prompt;
+        newState.activitySelections = _this2.state.activitySelections;
         _this2.setState(newState);
       });
 
@@ -13322,6 +13325,12 @@ var DestinationSelectorContainer = function (_React$Component) {
       }
     }
   }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      this.state.hotels.map(function (hotel) {});
+    }
+  }, {
     key: 'updateCheckbox',
     value: function updateCheckbox(event) {
       var intervalId = null;
@@ -13330,9 +13339,13 @@ var DestinationSelectorContainer = function (_React$Component) {
       if (checkbox.checked) {
         this.totalCheckedBoxes++;
         checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue";
+        var data = { name: event.target.name, isSelected: true };
+        _axios2.default.put('/api/activity/' + event.target.name, data);
       } else {
         this.totalCheckedBoxes--;
         checkbox.nextElementSibling.style.backgroundColor = "lightgray";
+        var _data = { name: event.target.name, isSelected: false };
+        _axios2.default.put('/api/activity/' + event.target.name, _data);
       }
 
       if (this.totalCheckedBoxes === 0) {
@@ -13367,11 +13380,6 @@ var DestinationSelectorContainer = function (_React$Component) {
         //     }
         // }, 1);
       }
-    }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(event) {
-      event.preventDefault();
     }
   }, {
     key: 'render',

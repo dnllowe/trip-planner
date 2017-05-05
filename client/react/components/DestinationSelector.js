@@ -43,12 +43,13 @@ const DestinationSelector = (props) => {
                     <li key={activity.name}>
                         <input
                           type='checkbox'
-                          name='activity'
+                          nameHyphenated={activity.name.replace(/\s+/g, '-')}
+                          name={activity.name}
                           onClick={props.updateCheckbox}
                           id={activity.name.replace(/\s+/g, '-')}
                           value={activity.name.replace(/\s+/g, '-')}
                           id={activity.name.replace(/\s+/g, '-')} />
-                        <label htmlFor={activity.name.replace(/\s+/g, '-')}></label>
+                        <label htmlFor={activity.name.replace(/\s+/g, '-')} />
                         {activity.name}
                     </li>
                     )
