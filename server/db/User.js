@@ -22,7 +22,7 @@ const User = db.define('user', {
   }
 }, {
     instanceMethods: {
-      renumberDays: function (deletedDay) {
+      deleteDay: function (deletedDay) {
 
         this.hotels.forEach((hotel, index, hotels) => {
           // If hotel falls on day above deleted day, lower its day number
