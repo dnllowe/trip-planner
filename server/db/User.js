@@ -8,6 +8,10 @@ const db = require('./_db')
 // Will hold the id of the model at index 0, and the day number at index 1
 
 const User = db.define('user', {
+  sessionId: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   hotels: {
     type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.INTEGER))
   },

@@ -6,6 +6,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const volleyball = require('volleyball')
 const session = require('express-session')
+const pg = require('pg')
+const pgSession = require('connect-pg-simple')(session)
 
 const db = require('./db')
 const router = require('./routes')
@@ -15,24 +17,15 @@ const PORT = 3000
 
 // Session middleware
 app.use(session({
+  store: new pgSession({
+    pg,
+    conString: process.env.DATABASE_URL || 'postgres://localhost/trip-planner',
+    tableName: 'session'
+  }),
   resave: true,
   saveUninitialized: true,
   secret: 'orbital',
-
 }))
-
-app.use((req, res, next) => {
-  if (!req.session.id) {
-    User.create().
-      then(user => {
-        console.log('NEW Session ID: ', req.session.id)
-        req.session.id = user.id
-      })
-      .catch(console.error)
-  } else {
-    console.log('EXISTING Session ID: ', req.session.id)
-  }
-})
 
 // Logging middleware
 app.use(volleyball)
