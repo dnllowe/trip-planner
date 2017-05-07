@@ -51,6 +51,7 @@ class DestinationSelectorContainer extends React.Component {
       store.dispatch(setRestaurants(destinationName))
       store.dispatch(setActivities(destinationName))
       this.setState({ prompt: `What Do You Want to Do in ${destinationName}?` })
+      // axios.put(`/api/destination/${destinationName}`, {isSelected: true})
     }
 
     if (event.target.name === 'activity') {
@@ -72,13 +73,11 @@ class DestinationSelectorContainer extends React.Component {
     if (checkbox.checked) {
       this.totalCheckedBoxes++
       checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue"
-      const data = { name: event.target.name, isSelected: true }
-      axios.put(`/api/activity/${event.target.name}`, data)
+      // axios.put(`/api/activity/${event.target.name}`, {isSelected: true})
     } else {
       this.totalCheckedBoxes--
       checkbox.nextElementSibling.style.backgroundColor = "lightgray"
-      const data = { name: event.target.name, isSelected: false }
-      axios.put(`/api/activity/${event.target.name}`, data)
+      // axios.put(`/api/activity/${event.target.name}`, {isSelected: true})
     }
 
     if (this.totalCheckedBoxes === 0) {

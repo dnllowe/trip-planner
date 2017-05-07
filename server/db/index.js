@@ -12,8 +12,4 @@ Hotel.belongsTo(Destination)
 Activity.belongsTo(Destination)
 Restaurant.belongsTo(Destination)
 
-Day.belongsTo(Hotel)
-Day.belongsToMany(Activity, { through: 'day-activity' })
-Day.belongsToMany(Restaurant, { through: 'day-restaurant' })
-
 module.exports = db

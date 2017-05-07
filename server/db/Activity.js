@@ -8,10 +8,6 @@ const Activity = db.define('activity', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  isSelected: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  },
   imageUrl: {
     type: Sequelize.STRING
   },

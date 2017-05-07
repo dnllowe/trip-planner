@@ -13318,6 +13318,7 @@ var DestinationSelectorContainer = function (_React$Component) {
         _store2.default.dispatch((0, _setRestaurants2.default)(destinationName));
         _store2.default.dispatch((0, _setActivities2.default)(destinationName));
         this.setState({ prompt: 'What Do You Want to Do in ' + destinationName + '?' });
+        // axios.put(`/api/destination/${destinationName}`, {isSelected: true})
       }
 
       if (event.target.name === 'activity') {
@@ -13339,13 +13340,11 @@ var DestinationSelectorContainer = function (_React$Component) {
       if (checkbox.checked) {
         this.totalCheckedBoxes++;
         checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue";
-        var data = { name: event.target.name, isSelected: true };
-        _axios2.default.put('/api/activity/' + event.target.name, data);
+        // axios.put(`/api/activity/${event.target.name}`, {isSelected: true})
       } else {
         this.totalCheckedBoxes--;
         checkbox.nextElementSibling.style.backgroundColor = "lightgray";
-        var _data = { name: event.target.name, isSelected: false };
-        _axios2.default.put('/api/activity/' + event.target.name, _data);
+        // axios.put(`/api/activity/${event.target.name}`, {isSelected: true})
       }
 
       if (this.totalCheckedBoxes === 0) {
