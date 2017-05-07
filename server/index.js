@@ -5,11 +5,28 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const volleyball = require('volleyball')
+const session = require('express-session')
 
 const db = require('./db')
 const router = require('./routes')
+const User = require('./db/User')
 
 const PORT = 3000
+
+// Session middleware
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'orbital',
+
+}))
+
+app.use((req, res, next) => {
+  if (!req.session.id) {
+    User.create().
+    then(user => req.session.id = user.id)
+  }
+})
 
 // Logging middleware
 app.use(volleyball)
