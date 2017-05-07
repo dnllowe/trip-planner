@@ -8,6 +8,9 @@ const reducer = (prevState = initialState, action) => {
   let newState = Object.assign({}, prevState)
 
   switch (action.type) {
+    case actions.SET_USER:
+      newState.user = action.user
+      break
     case actions.LOAD_DESTINATIONS:
       newState.destinations = action.destinations
       break

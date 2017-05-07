@@ -1,6 +1,7 @@
 'use strict'
 
 const actions = {
+  SET_USER: 'SET_USER',
   ADD_DAY: 'ADD_DAY',
   REMOVE_DAY: 'REMOVE_DAY',
   ADD_HOTEL: 'ADD_HOTEL',
