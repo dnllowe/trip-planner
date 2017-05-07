@@ -28,6 +28,25 @@ router.get('/:destinationName', (req, res, next) => {
     .catch(console.error)
 })
 
+// UPDATE SPECIFIC DESTINATION BY NAME
+router.put('/:destinationName', (req, res, next) => {
+  Destination.findOne({
+    where: {
+      name: req.params.destinationName
+    }
+  })
+    .then(destination => {
+      console.log(req.body)
+      return destination.update(req.body)
+
+    })
+    .then(destination => {
+      console.log(desination)
+      res.json(destination).status(200)
+    })
+    .catch(console.error)
+})
+
 // GET ALL HOTELS FOR SPECIFIC DESTINATION
 router.get('/:destinationName/hotels', (req, res, next) => {
   Destination.findOne({

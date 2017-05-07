@@ -19,6 +19,7 @@ class DestinationSelectorContainer extends React.Component {
     this.state = store.getState()
     this.totalCheckedBoxes = 0
     this.state.prompt = null
+    this.state.activitySelections = []
     this.handleSubmit = this.handleSubmit.bind(this)
     this.updateDestination = this.updateDestination.bind(this)
     this.updateCheckbox = this.updateCheckbox.bind(this)
@@ -30,6 +31,7 @@ class DestinationSelectorContainer extends React.Component {
       // Keep track of properties that aren't on store state
       const newState = store.getState()
       newState.prompt = this.state.prompt
+      newState.activitySelections = this.state.activitySelections
       this.setState(newState)
     })
 
@@ -56,53 +58,61 @@ class DestinationSelectorContainer extends React.Component {
     }
   }
 
+  handleSubmit(event) {
+    event.preventDefault()
+    this.state.hotels.map(hotel => {
+
+    })
+  }
+
   updateCheckbox(event) {
     let intervalId = null;
     const checkbox = event.target
 
-    if(checkbox.checked) {
+    if (checkbox.checked) {
       this.totalCheckedBoxes++
-      checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue";
+      checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue"
+      const data = { name: event.target.name, isSelected: true }
+      axios.put(`/api/activity/${event.target.name}`, data)
     } else {
       this.totalCheckedBoxes--
-      checkbox.nextElementSibling.style.backgroundColor = "lightgray";
+      checkbox.nextElementSibling.style.backgroundColor = "lightgray"
+      const data = { name: event.target.name, isSelected: false }
+      axios.put(`/api/activity/${event.target.name}`, data)
     }
 
-    if(this.totalCheckedBoxes === 0) {
+    if (this.totalCheckedBoxes === 0) {
       this.setState({ prompt: `What Do You Want to Do in ${store.getState().currentDestination.name}?` })
       // whatToDo.style = "opacity: 0.1";
 
-        // clearInterval(intervalId);
-        // intervalId = setInterval(() => {
-        //     let currentOpacity = parseFloat(whatToDo.style.opacity);
-        //     currentOpacity += 0.01;
-        //     whatToDo.style.opacity = currentOpacity.toString();
+      // clearInterval(intervalId);
+      // intervalId = setInterval(() => {
+      //     let currentOpacity = parseFloat(whatToDo.style.opacity);
+      //     currentOpacity += 0.01;
+      //     whatToDo.style.opacity = currentOpacity.toString();
 
-        //     if(whatToDo.style.opacity >= 1) {
-        //         clearInterval(intervalId);
-        //     }
-        // }, 1);
+      //     if(whatToDo.style.opacity >= 1) {
+      //         clearInterval(intervalId);
+      //     }
+      // }, 1);
     }
 
     // Only true when all checkboxes were empty, and this is first to get selected
-    if(this.totalCheckedBoxes === 1 && checkbox.checked) {
+    if (this.totalCheckedBoxes === 1 && checkbox.checked) {
       this.setState({ prompt: "Anything Else?" })
-        // whatToDo.style = "opacity: 0.1";
+      // whatToDo.style = "opacity: 0.1";
 
-        // clearInterval(intervalId);
-        // intervalId = setInterval(() => {
-        //     let currentOpacity = parseFloat(whatToDo.style.opacity);
-        //     currentOpacity += 0.01;
-        //     whatToDo.style.opacity = currentOpacity.toString();
+      // clearInterval(intervalId);
+      // intervalId = setInterval(() => {
+      //     let currentOpacity = parseFloat(whatToDo.style.opacity);
+      //     currentOpacity += 0.01;
+      //     whatToDo.style.opacity = currentOpacity.toString();
 
-        //     if(whatToDo.style.opacity >= 1) {
-        //         clearInterval(intervalId);
-        //     }
-        // }, 1);
+      //     if(whatToDo.style.opacity >= 1) {
+      //         clearInterval(intervalId);
+      //     }
+      // }, 1);
     }
-  }
-  handleSubmit(event) {
-    event.preventDefault()
   }
 
   render() {
