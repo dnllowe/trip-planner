@@ -24,7 +24,13 @@ app.use(session({
 app.use((req, res, next) => {
   if (!req.session.id) {
     User.create().
-    then(user => req.session.id = user.id)
+      then(user => {
+        console.log('NEW Session ID: ', req.session.id)
+        req.session.id = user.id
+      })
+      .catch(console.error)
+  } else {
+    console.log('EXISTING Session ID: ', req.session.id)
   }
 })
 
