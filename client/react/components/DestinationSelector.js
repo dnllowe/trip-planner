@@ -41,16 +41,17 @@ const DestinationSelector = (props) => {
                   props.activities.map(activity => {
                   return (
                     <li key={activity.name}>
-                        <input
-                          type='checkbox'
-                          nameHyphenated={activity.name.replace(/\s+/g, '-')}
-                          name={activity.name}
-                          onClick={props.updateCheckbox}
-                          id={activity.name.replace(/\s+/g, '-')}
-                          value={activity.name.replace(/\s+/g, '-')}
-                          id={activity.name.replace(/\s+/g, '-')} />
-                        <label htmlFor={activity.name.replace(/\s+/g, '-')} />
-                        {activity.name}
+                      <input
+                        type='checkbox'
+                        name={activity.name}
+                        value={activity.name.replace(/\s+/g, '-')}
+                      />
+                      <label
+                        id={activity.id}
+                        htmlFor={activity.name.replace(/\s+/g, '-')}
+                        onClick={props.updateCheckbox}
+                      />
+                      {activity.name}
                     </li>
                     )
                   })

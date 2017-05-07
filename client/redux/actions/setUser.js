@@ -5,7 +5,7 @@ import actions from './actions'
 
 const fetchingUser = () => {
   return (dispatch) => {
-    axios.get('/api/session/whoami')
+    axios.get('/api/user/whoami')
       .then(res => res.data)
       .then(user => {
         dispatch(setUser(user))

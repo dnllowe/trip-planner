@@ -11,6 +11,7 @@ import setBackgroundImage from '../../redux/actions/setBackgroundImage'
 import setHotels from '../../redux/actions/setHotels'
 import setRestaurants from '../../redux/actions/setRestaurants'
 import setActivities from '../../redux/actions/setActivities'
+import updateUser from '../../redux/actions/updateUser'
 
 class DestinationSelectorContainer extends React.Component {
 
@@ -61,23 +62,30 @@ class DestinationSelectorContainer extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.state.hotels.map(hotel => {
-
-    })
+    let updatedUser = store.getState().user
+    updatedUser.activities = this.state.activitySelections
+    store.dispatch(updateUser(updatedUser))
   }
 
   updateCheckbox(event) {
+
     let intervalId = null;
     const checkbox = event.target
+    let newSelections = []
 
-    if (checkbox.checked) {
+    if (this.state.activitySelections.indexOf(event.target.id) === -1) {
       this.totalCheckedBoxes++
-      checkbox.nextElementSibling.style.backgroundColor = "cornflowerblue"
-      // axios.put(`/api/activity/${event.target.name}`, {isSelected: true})
+      event.target.style.backgroundColor = "cornflowerblue"
+      newSelections = this.state.activitySelections.slice()
+      newSelections.push([event.target.id, 1])
+      this.setState({activitySelections: newSelections})
     } else {
       this.totalCheckedBoxes--
-      checkbox.nextElementSibling.style.backgroundColor = "lightgray"
-      // axios.put(`/api/activity/${event.target.name}`, {isSelected: true})
+      event.target.style.backgroundColor = "lightgray"
+      newSelections = this.state.activitySelections.filter((element) => {
+        return element[1] !== activity.id
+      })
+      this.setState({activitySelections: newSelections})
     }
 
     if (this.totalCheckedBoxes === 0) {
