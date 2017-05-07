@@ -3,18 +3,19 @@
 const router = require('express').Router()
 const User = require('../db/User')
 
-router.use('/', (req, res, next) => {
+router.use('/whoami', (req, res, next) => {
+
   return User.findOrCreate({
     where: { sessionId: req.session.id }
   })
-  .then((wasFound, user) => {
-    if (wasFound) {
-      console.log('EXISTING Session User ID: ', req.session.id, "ID: ", user.id)
+    .then(([user, wasCreated]) => {
+    if (wasCreated) {
+      console.log('NEW Session: ', req.session.id, "USER ID: ", user.id)
     } else {
-      console.log('NEW Session User ID: ', req.session.id), "ID: ", user.id
+      console.log('EXISTING Session: ', req.session.id, "USER ID: ", user.id)
     }
+    res.json(user)
   })
-  .then(() => next())
   .catch(console.error)
   }
 )

@@ -1,6 +1,7 @@
 'use strict'
 
 const initialState = {
+  user: null,
   destinations: [],
   currentDestination: null,
   days: [],
