@@ -86,7 +86,7 @@ class DestinationSelectorContainer extends React.Component {
       })
       this.setState({currentSelections: newSelections})
     }
-    this.updatePrompt()
+    this.updatePrompt(this.props.currentDestination.name)
   }
 
   updatePrompt(destinationName) {
