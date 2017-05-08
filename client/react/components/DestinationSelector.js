@@ -31,7 +31,7 @@ const DestinationSelector = (props) => {
             <br />
             {props.selection &&
               <div id='activities' name='activities'>
-                <h3 className='bold-text white-text' id='whatToDo'>
+              <h3 className='bold-text white-text' id='whatToDo' style={props.whatToDoStyle}>
                   {props.prompt}
                 </h3>
                 <ul className='activity-list'>
@@ -42,7 +42,6 @@ const DestinationSelector = (props) => {
 
                   {/*Check to see if activity was already selected, and set color accordingly below*/}
                   const checked = props.currentSelections.includes(activity.id)
-                  console.log(checked)
                   let customProps = null
 
                   if (checked) {

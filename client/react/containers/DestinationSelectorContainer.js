@@ -19,10 +19,14 @@ class DestinationSelectorContainer extends React.Component {
 
     this.state = {
       prompt: null,
-      currentSelections: []
+      currentSelections: [],
+      whatToDoStyle: { opacity: null }
     }
 
     this.totalCheckedBoxes = 0
+    this.intervalId = null
+    this.whatToDoOpacity = 1.0
+    this.isFadingIn = false
     this.handleSubmit = this.handleSubmit.bind(this)
     this.updateDestination = this.updateDestination.bind(this)
     this.updateCheckbox = this.updateCheckbox.bind(this)
@@ -74,37 +78,60 @@ class DestinationSelectorContainer extends React.Component {
 
     if (this.state.currentSelections.indexOf(selectionId) === -1) {
       this.totalCheckedBoxes++
+
+      // Changing from 'What Do You Want To Do?' to 'Anyhing Else?'
+      if (this.totalCheckedBoxes === 1) {
+        this.fadeInPrompt()
+      }
+
       event.target.style.backgroundColor = "cornflowerblue"
       newSelections = this.state.currentSelections.slice()
       newSelections.push(selectionId)
       this.setState({currentSelections: newSelections})
     } else {
       this.totalCheckedBoxes--
+
+      // Changing from 'Anyhing Else?' to 'What Do You Want To Do?'
+      if (this.totalCheckedBoxes === 0) {
+        this.fadeInPrompt()
+      }
+
       event.target.style.backgroundColor = "lightgray"
       newSelections = this.state.currentSelections.filter((id) => {
         return id !== selectionId
       })
+
       this.setState({currentSelections: newSelections})
     }
     this.updatePrompt(this.props.currentDestination.name)
+  }
+
+  fadeInPrompt() {
+
+    if (!this.isFadingIn) {
+      // Slowly fade new prompt in
+      this.whatToDoOpacity = 0.1
+      this.setState({ whatToDoStyle: { opacity: this.whatToDoOpacity.toString() } })
+      clearInterval(this.intervalId)
+
+      this.intervalId = setInterval(() => {
+          this.whatToDoOpacity += 0.01
+          this.setState({ whatToDoStyle: { opacity: this.whatToDoOpacity.toString() } })
+
+          if (this.whatToDoOpacity >= 1) {
+            this.isFadingIn = false
+            clearInterval(this.intervalId);
+          }
+      }, 1)
+      this.isFadingIn = true
+    }
   }
 
   updatePrompt(destinationName) {
 
     if (this.totalCheckedBoxes === 0) {
       this.setState({ prompt: `What Do You Want to Do in ${destinationName}?` })
-      // whatToDo.style = "opacity: 0.1";
-
-      // clearInterval(intervalId);
-      // intervalId = setInterval(() => {
-      //     let currentOpacity = parseFloat(whatToDo.style.opacity);
-      //     currentOpacity += 0.01;
-      //     whatToDo.style.opacity = currentOpacity.toString();
-
-      //     if(whatToDo.style.opacity >= 1) {
-      //         clearInterval(intervalId);
-      //     }
-      // }, 1);
+      this.fadeInPrompt()
     }
 
     // Only true when all checkboxes were empty, and this is first to get selected
@@ -136,6 +163,7 @@ class DestinationSelectorContainer extends React.Component {
         activities={this.props.activities}
         prompt={this.state.prompt}
         currentSelections={this.state.currentSelections}
+        whatToDoStyle={this.state.whatToDoStyle}
       />
     )
   }
