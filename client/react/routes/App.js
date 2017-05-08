@@ -3,6 +3,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Home from '../containers/Home'
+import TripContainer from '../containers/TripContainer'
 import store from '../../redux/store'
 
 class App extends React.Component {
@@ -71,7 +72,10 @@ class App extends React.Component {
           <Switch>
 
             {/*LANDING PAGE ROUTE*/}
-            <Route path='/' component={Home} />
+            <Route exact path='/' component={Home} />
+
+            {/*TRIP ROUTE*/}
+            <Route path='/trip' component={TripContainer} />
 
           </Switch>
         </div>
