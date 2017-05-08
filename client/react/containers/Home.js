@@ -9,8 +9,8 @@ import loadDestinations from '../../redux/actions/loadDesetinations'
 
 class Home extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = store.getState()
   }
 
@@ -28,7 +28,7 @@ class Home extends React.Component {
 
   render() {
     return (
-        <DestinationSelectorContainer {...this.state }/>
+      <DestinationSelectorContainer {...this.state} />
     )
   }
 }

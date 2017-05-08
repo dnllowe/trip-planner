@@ -12257,6 +12257,11 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = _store2.default.getState();
+    _this.state.bgStyle = { backgroundImage: _store2.default.getState().bgImage };
+    _this.fadeInBackground = _this.fadeInBackground.bind(_this);
+    _this.bgOpacity = null;
+    _this.bgStyle = null;
+    _this.isFadingIn = false;
     return _this;
   }
 
@@ -12265,19 +12270,55 @@ var App = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      // Wait until background image has changed before calling fadeInBackground
       this.unsubscribe = _store2.default.subscribe(function () {
-        _this2.setState(_store2.default.getState());
+        if (_this2.state.bgStyle.backgroundImage === _store2.default.getState().bgImage) {} else {
+          _this2.fadeInBackground();
+        }
       });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.unsubscribe();
+    }
+  }, {
+    key: 'fadeInBackground',
+    value: function fadeInBackground() {
+      var _this3 = this;
+
+      if (!this.isFadingIn) {
+        // Slowly fade new prompt in
+        this.bgOpacity = 0.15;
+        this.setState({
+          bgStyle: Object.assign({}, { backgroundImage: _store2.default.getState().bgImage }, { opacity: this.bgOpacity.toString() })
+        });
+
+        clearInterval(this.intervalId);
+
+        this.intervalId = setInterval(function () {
+          _this3.bgOpacity += 0.01;
+          _this3.setState({
+            bgStyle: Object.assign({}, { backgroundImage: _store2.default.getState().bgImage }, { opacity: _this3.bgOpacity.toString() })
+          });
+          if (_this3.bgOpacity >= 1) {
+            _this3.isFadingIn = false;
+            clearInterval(_this3.intervalId);
+          }
+        }, 0.05);
+        this.isFadingIn = true;
+      }
     }
   }, {
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'main',
         null,
         _react2.default.createElement(
           'div',
-          { className: 'bg-image', style: { backgroundImage: this.state.bgImage } },
+          { className: 'bg-image', style: this.state.bgStyle },
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
@@ -13528,10 +13569,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Home = function (_React$Component) {
   _inherits(Home, _React$Component);
 
-  function Home() {
+  function Home(props) {
     _classCallCheck(this, Home);
 
-    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
+    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
     _this.state = _store2.default.getState();
     return _this;
