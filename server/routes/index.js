@@ -3,10 +3,10 @@
 const router = require('express').Router()
 const destination = require('./destination')
 const activity = require('./activity')
-const session = require('./session')
+const user = require('./user')
 
 router.use('/destination', destination)
 router.use('/activity', activity)
-router.use('/session', session)
+router.use('/user', user)
 
 module.exports = router

@@ -12,12 +12,17 @@ const setRestaurants = (restaurants) => {
 
 const fetchingRestaurants = (destinationName) => {
   return (dispatch) => {
-    axios.get(`/api/destination/${destinationName}/restaurants`)
-      .then(res => res.data)
-      .then(restaurants => {
-        dispatch(setRestaurants(restaurants))
-      })
-      .catch(console.error)
+
+    if (destinationName === 'default') {
+      dispatch(setRestaurants([]))
+    } else {
+        axios.get(`/api/destination/${destinationName}/restaurants`)
+          .then(res => res.data)
+          .then(restaurants => {
+            dispatch(setRestaurants(restaurants))
+          })
+          .catch(console.error)
+    }
   }
 }
 

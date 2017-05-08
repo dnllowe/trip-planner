@@ -39,18 +39,30 @@ const DestinationSelector = (props) => {
                 {/*MAP OVER ACTIVITES TO GET LIST ITEMS FOR UNORDERED LIST*/}
                 {props.activities &&
                   props.activities.map(activity => {
+
+                  {/*Check to see if activity was already selected, and set color accordingly below*/}
+                  const checked = props.currentSelections.includes(activity.id)
+                  console.log(checked)
+                  let customProps = null
+
+                  if (checked) {
+                    customProps = {style: {backgroundColor: 'cornflowerblue'}}
+                  }
+
                   return (
                     <li key={activity.name}>
-                        <input
-                          type='checkbox'
-                          nameHyphenated={activity.name.replace(/\s+/g, '-')}
-                          name={activity.name}
-                          onClick={props.updateCheckbox}
-                          id={activity.name.replace(/\s+/g, '-')}
-                          value={activity.name.replace(/\s+/g, '-')}
-                          id={activity.name.replace(/\s+/g, '-')} />
-                        <label htmlFor={activity.name.replace(/\s+/g, '-')} />
-                        {activity.name}
+                      <input
+                        type='checkbox'
+                        name={activity.name}
+                        value={activity.name.replace(/\s+/g, '-')}
+                      />
+                      <label
+                        id={activity.id}
+                        htmlFor={activity.name.replace(/\s+/g, '-')}
+                        onClick={props.updateCheckbox}
+                        {...customProps}
+                      />
+                      {activity.name}
                     </li>
                     )
                   })

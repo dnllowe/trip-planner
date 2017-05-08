@@ -12,12 +12,17 @@ const setHotels = (hotels) => {
 
 const fetchingHotels = (destinationName) => {
   return (dispatch) => {
-    axios.get(`/api/destination/${destinationName}/hotels`)
-      .then(res => res.data)
-      .then(hotels => {
-        dispatch(setHotels(hotels))
-      })
-      .catch(console.error)
+
+    if (destinationName === 'default') {
+      dispatch(setHotels([]))
+    } else {
+        axios.get(`/api/destination/${destinationName}/hotels`)
+          .then(res => res.data)
+          .then(hotels => {
+            dispatch(setHotels(hotels))
+          })
+          .catch(console.error)
+    }
   }
 }
 

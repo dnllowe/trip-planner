@@ -2,6 +2,7 @@
 
 const actions = {
   SET_USER: 'SET_USER',
+  UPDATE_USER: 'UPDATE_USER',
   ADD_DAY: 'ADD_DAY',
   REMOVE_DAY: 'REMOVE_DAY',
   ADD_HOTEL: 'ADD_HOTEL',

@@ -3,7 +3,8 @@
 const router = require('express').Router()
 const User = require('../db/User')
 
-router.use('/whoami', (req, res, next) => {
+// FIND OR CREATE USER FROM SESSION HISTORY
+router.get('/whoami', (req, res, next) => {
 
   return User.findOrCreate({
     where: { sessionId: req.session.id }
@@ -19,5 +20,17 @@ router.use('/whoami', (req, res, next) => {
   .catch(console.error)
   }
 )
+
+// UPDATE USER
+router.put('/', (req, res, next) => {
+  return User.find({ where: { sessionId: req.session.id } })
+    .then(user => {
+      return user.updateAttributes(req.body)
+    })
+    .then(updatedUser => {
+      res.json(updatedUser)
+    })
+    .catch(console.error)
+})
 
 module.exports = router

@@ -12,12 +12,17 @@ const setActivities = (activities) => {
 
 const fetchingActivities = (destinationName) => {
   return (dispatch) => {
-    axios.get(`/api/destination/${destinationName}/activities`)
-      .then(res => res.data)
-      .then(activities => {
-        dispatch(setActivities(activities))
-      })
-      .catch(console.error)
+
+    if (destinationName === 'default') {
+      dispatch(setActivities([]))
+    } else {
+        axios.get(`/api/destination/${destinationName}/activities`)
+          .then(res => res.data)
+          .then(activities => {
+            dispatch(setActivities(activities))
+          })
+          .catch(console.error)
+    }
   }
 }
 

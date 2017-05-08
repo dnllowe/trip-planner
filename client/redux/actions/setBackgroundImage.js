@@ -23,16 +23,15 @@ const fetchDestination = (destinationName) => {
     // Use beach image if user does not select a city
     if (destinationName === 'default') {
       dispatch(setBackgroundImage(`url(/images/beach-3.jpg)`))
-      return
+    } else {
+        axios.get(`/api/destination/${destinationName}`)
+          .then(res => res.data)
+          .then(destination => {
+            dispatch(setBackgroundImage(findRandomUrl(destination)))
+          })
+          .catch(console.error)
+      }
     }
-
-    axios.get(`/api/destination/${destinationName}`)
-      .then(res => res.data)
-      .then(destination => {
-        dispatch(setBackgroundImage(findRandomUrl(destination)))
-      })
-      .catch(console.error)
-  }
 }
 
 export default fetchDestination
