@@ -15,7 +15,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Home mounted')
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
