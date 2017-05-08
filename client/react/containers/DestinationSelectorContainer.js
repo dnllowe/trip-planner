@@ -52,7 +52,6 @@ class DestinationSelectorContainer extends React.Component {
       store.dispatch(setRestaurants(destinationName))
       store.dispatch(setActivities(destinationName))
       this.setState({ prompt: `What Do You Want to Do in ${destinationName}?` })
-      // axios.put(`/api/destination/${destinationName}`, {isSelected: true})
     }
 
     if (event.target.name === 'activity') {
