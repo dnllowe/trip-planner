@@ -80,10 +80,7 @@ class DestinationSelectorContainer extends React.Component {
       this.totalCheckedBoxes++
 
       // Changing from 'What Do You Want To Do?' to 'Anyhing Else?'
-      if (this.totalCheckedBoxes === 1) {
-        this.fadeInPrompt()
-      }
-
+      if (this.totalCheckedBoxes === 1) { this.fadeInPrompt() }
       event.target.style.backgroundColor = "cornflowerblue"
       newSelections = this.state.currentSelections.slice()
       newSelections.push(selectionId)
@@ -92,10 +89,7 @@ class DestinationSelectorContainer extends React.Component {
       this.totalCheckedBoxes--
 
       // Changing from 'Anyhing Else?' to 'What Do You Want To Do?'
-      if (this.totalCheckedBoxes === 0) {
-        this.fadeInPrompt()
-      }
-
+      if (this.totalCheckedBoxes === 0) { this.fadeInPrompt() }
       event.target.style.backgroundColor = "lightgray"
       newSelections = this.state.currentSelections.filter((id) => {
         return id !== selectionId
@@ -137,18 +131,6 @@ class DestinationSelectorContainer extends React.Component {
     // Only true when all checkboxes were empty, and this is first to get selected
     if (this.totalCheckedBoxes >= 1) {
       this.setState({ prompt: "Anything Else?" })
-      // whatToDo.style = "opacity: 0.1";
-
-      // clearInterval(intervalId);
-      // intervalId = setInterval(() => {
-      //     let currentOpacity = parseFloat(whatToDo.style.opacity);
-      //     currentOpacity += 0.01;
-      //     whatToDo.style.opacity = currentOpacity.toString();
-
-      //     if(whatToDo.style.opacity >= 1) {
-      //         clearInterval(intervalId);
-      //     }
-      // }, 1);
     }
   }
 
