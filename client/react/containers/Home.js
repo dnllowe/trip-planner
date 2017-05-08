@@ -29,9 +29,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className='bg-image' style={{ backgroundImage: this.state.bgImage }}>
         <DestinationSelectorContainer {...this.state }/>
-      </div>
     )
   }
 }
