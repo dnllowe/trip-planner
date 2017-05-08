@@ -13371,8 +13371,9 @@ var DestinationSelectorContainer = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
-      var updatedUser = _store2.default.getState().user;
+      var updatedUser = this.state.user;
       updatedUser.activities = this.state.activitySelections;
+      updatedUser.destinations = [[this.state.currentDestination.id, 1]]; // Value is array of arrays [ [id, daynumber], ]
       _store2.default.dispatch((0, _updateUser2.default)(updatedUser));
     }
   }, {

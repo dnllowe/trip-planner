@@ -62,8 +62,9 @@ class DestinationSelectorContainer extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    let updatedUser = store.getState().user
+    let updatedUser = this.state.user
     updatedUser.activities = this.state.activitySelections
+    updatedUser.destinations = [[this.state.currentDestination.id, 1]] // Value is array of arrays [ [id, daynumber], ]
     store.dispatch(updateUser(updatedUser))
   }
 
