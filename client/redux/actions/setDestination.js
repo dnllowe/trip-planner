@@ -12,12 +12,16 @@ const setDestination = (destination) => {
 
 const fetchingDestination = (destinationName) => {
   return (dispatch) => {
-    axios.get(`/api/destination/${destinationName}`)
-      .then(res => res.data)
-      .then(destination => {
-        dispatch(setDestination(destination))
-      })
-      .catch(console.error)
+    if (destinationName === 'default') {
+      dispatch(setDestination(null))
+    } else {
+        axios.get(`/api/destination/${destinationName}`)
+          .then(res => res.data)
+          .then(destination => {
+            dispatch(setDestination(destination))
+          })
+          .catch(console.error)
+    }
   }
 }
 

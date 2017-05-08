@@ -4,6 +4,8 @@ import React from 'react'
 
 import DestinationSelectorContainer from './DestinationSelectorContainer'
 import store from '../../redux/store'
+import setUser from '../../redux/actions/setUser'
+import loadDestinations from '../../redux/actions/loadDesetinations'
 
 class Home extends React.Component {
 
@@ -13,9 +15,12 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    console.log('Home mounted')
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
+    store.dispatch(setUser())
+    store.dispatch(loadDestinations())
   }
 
   componentWillUnmount() {
@@ -25,7 +30,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className='bg-image' style={{ backgroundImage: this.state.bgImage }}>
-        <DestinationSelectorContainer />
+        <DestinationSelectorContainer {...this.state }/>
       </div>
     )
   }
