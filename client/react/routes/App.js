@@ -69,6 +69,8 @@ class App extends React.Component {
     return (
       <main>
         <div className='bg-image' style={this.state.bgStyle}>
+          <br />
+          <h1 class='header' id='header'>Welcome To Trip Planner :)</h1>
           <Switch>
 
             {/*LANDING PAGE ROUTE*/}
