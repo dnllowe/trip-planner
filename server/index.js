@@ -46,6 +46,10 @@ app.use('/reactDom.min.js', express.static(path.join(__dirname, '../node_modules
 // API routes
 app.use('/api', router)
 
+app.get('*', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+})
+
 // Sync database models
 db.sync()
 .then(() => {
