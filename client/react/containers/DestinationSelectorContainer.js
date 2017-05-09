@@ -15,12 +15,14 @@ import updateUser from '../../redux/actions/updateUser'
 class DestinationSelectorContainer extends React.Component {
 
   constructor(props) {
+
     super(props)
 
     this.state = {
       prompt: null,
       currentSelections: [],
-      whatToDoStyle: { opacity: null }
+      whatToDoStyle: { opacity: null },
+      redirectToTrip: false
     }
 
     this.totalCheckedBoxes = 0
@@ -67,6 +69,7 @@ class DestinationSelectorContainer extends React.Component {
     })
     updatedUser.destinations = [[this.props.currentDestination.id, 1]] // Value is array of arrays [ [id, daynumber], ]
     store.dispatch(updateUser(updatedUser))
+    this.setState({redirectToTrip: true})
   }
 
   updateCheckbox(event) {
@@ -137,15 +140,13 @@ class DestinationSelectorContainer extends React.Component {
   render() {
     return (
       <DestinationSelector
+        {...this.state}
         handleSubmit={this.handleSubmit}
         updateDestination={this.updateDestination}
         updateCheckbox={this.updateCheckbox}
         destinations={this.props.destinations}
         selection={this.props.currentDestination}
         activities={this.props.activities}
-        prompt={this.state.prompt}
-        currentSelections={this.state.currentSelections}
-        whatToDoStyle={this.state.whatToDoStyle}
       />
     )
   }

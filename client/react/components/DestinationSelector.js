@@ -1,11 +1,13 @@
 'use strict'
 
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 const DestinationSelector = (props) => {
 
   return (
     <div>
+      {props.redirectToTrip && <Redirect to='/trip' />}
       <form id='tripDetails' onSubmit={props.handleSubmit} onChange={props.updateDestination}>
         <div className='row'>
           <div id='lightbox-landing-page' className='col-sm-6 col-sm-offset-3 col-xs-12 lightbox center-text'>

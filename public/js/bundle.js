@@ -13203,6 +13203,8 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DestinationSelector = function DestinationSelector(props) {
@@ -13210,6 +13212,7 @@ var DestinationSelector = function DestinationSelector(props) {
   return _react2.default.createElement(
     'div',
     null,
+    props.redirectToTrip && _react2.default.createElement(_reactRouterDom.Redirect, { to: '/trip' }),
     _react2.default.createElement(
       'form',
       { id: 'tripDetails', onSubmit: props.handleSubmit, onChange: props.updateDestination },
@@ -13320,6 +13323,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(6);
@@ -13381,7 +13386,8 @@ var DestinationSelectorContainer = function (_React$Component) {
     _this.state = {
       prompt: null,
       currentSelections: [],
-      whatToDoStyle: { opacity: null }
+      whatToDoStyle: { opacity: null },
+      redirectToTrip: false
     };
 
     _this.totalCheckedBoxes = 0;
@@ -13434,6 +13440,7 @@ var DestinationSelectorContainer = function (_React$Component) {
       });
       updatedUser.destinations = [[this.props.currentDestination.id, 1]]; // Value is array of arrays [ [id, daynumber], ]
       _store2.default.dispatch((0, _updateUser2.default)(updatedUser));
+      this.setState({ redirectToTrip: true });
     }
   }, {
     key: 'updateCheckbox',
@@ -13511,17 +13518,14 @@ var DestinationSelectorContainer = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_DestinationSelector2.default, {
+      return _react2.default.createElement(_DestinationSelector2.default, _extends({}, this.state, {
         handleSubmit: this.handleSubmit,
         updateDestination: this.updateDestination,
         updateCheckbox: this.updateCheckbox,
         destinations: this.props.destinations,
         selection: this.props.currentDestination,
-        activities: this.props.activities,
-        prompt: this.state.prompt,
-        currentSelections: this.state.currentSelections,
-        whatToDoStyle: this.state.whatToDoStyle
-      });
+        activities: this.props.activities
+      }));
     }
   }]);
 
@@ -31007,11 +31011,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _store = __webpack_require__(33);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _Trip = __webpack_require__(291);
+
+var _Trip2 = _interopRequireDefault(_Trip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31027,17 +31041,20 @@ var TripContainer = function (_React$Component) {
   function TripContainer() {
     _classCallCheck(this, TripContainer);
 
-    return _possibleConstructorReturn(this, (TripContainer.__proto__ || Object.getPrototypeOf(TripContainer)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (TripContainer.__proto__ || Object.getPrototypeOf(TripContainer)).call(this));
+
+    _this.state = _store2.default.getState();
+    return _this;
   }
 
   _createClass(TripContainer, [{
+    key: 'expandHotels',
+    value: function expandHotels() {}
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        'Test'
-      );
+      return _react2.default.createElement(_Trip2.default, _extends({}, this.state, {
+        expandHotels: this.expandHotels }));
     }
   }]);
 
@@ -31045,6 +31062,278 @@ var TripContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = TripContainer;
+
+/***/ }),
+/* 291 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Trip = function (_React$Component) {
+  _inherits(Trip, _React$Component);
+
+  function Trip() {
+    _classCallCheck(this, Trip);
+
+    var _this = _possibleConstructorReturn(this, (Trip.__proto__ || Object.getPrototypeOf(Trip)).call(this));
+
+    _this.hotelButtonClick = _this.hotelButtonClick.bind(_this);
+    _this.toggleHotelMenu = _this.toggleHotelMenu.bind(_this);
+    _this.hideHotelMenu = _this.hideHotelMenu.bind(_this);
+
+    _this.restaurantButtonClick = _this.restaurantButtonClick.bind(_this);
+    _this.toggleRestaurantMenu = _this.toggleRestaurantMenu.bind(_this);
+    _this.hideRestaurantMenu = _this.hideRestaurantMenu.bind(_this);
+
+    _this.activityButtonClick = _this.activityButtonClick.bind(_this);
+    _this.toggleActivityMenu = _this.toggleActivityMenu.bind(_this);
+    _this.hideActivityMenu = _this.hideActivityMenu.bind(_this);
+    return _this;
+  }
+
+  _createClass(Trip, [{
+    key: 'hotelButtonClick',
+    value: function hotelButtonClick() {
+      console.log('CLICKED', this.refs);
+      this.toggleHotelMenu();
+      this.hideRestaurantMenu();
+      this.hideActivityMenu();
+    }
+  }, {
+    key: 'restaurantButtonClick',
+    value: function restaurantButtonClick() {
+
+      this.toggleRestaurantMenu();
+      this.hideHotelMenu();
+      this.hideActivityMenu();
+    }
+  }, {
+    key: 'activityButtonClick',
+    value: function activityButtonClick() {
+
+      this.toggleActivityMenu();
+      this.hideHotelMenu();
+      this.hideRestaurantMenu();
+    }
+  }, {
+    key: 'toggleHotelMenu',
+    value: function toggleHotelMenu() {
+      this.refs.hotelsButton.classList.toggle('nav-not-selected');
+      this.refs.hotelsButton.classList.toggle('nav-selected');
+      this.refs.hotelsMenu.classList.toggle('hide');
+      this.refs.hotelsMenu.classList.toggle('reveal');
+    }
+  }, {
+    key: 'hideHotelMenu',
+    value: function hideHotelMenu() {
+      this.refs.hotelsButton.classList.add('nav-not-selected');
+      this.refs.hotelsButton.classList.remove('nav-selected');
+      this.refs.hotelsMenu.classList.add('hide');
+      this.refs.hotelsMenu.classList.remove('reveal');
+    }
+  }, {
+    key: 'toggleRestaurantMenu',
+    value: function toggleRestaurantMenu() {
+      this.refs.restaurantsButton.classList.toggle('nav-not-selected');
+      this.refs.restaurantsButton.classList.toggle('nav-selected');
+      this.refs.restaurantsMenu.classList.toggle('hide');
+      this.refs.restaurantsMenu.classList.toggle('reveal');
+    }
+  }, {
+    key: 'hideRestaurantMenu',
+    value: function hideRestaurantMenu() {
+      this.refs.restaurantsButton.classList.add('nav-not-selected');
+      this.refs.restaurantsButton.classList.remove('nav-selected');
+      this.refs.restaurantsMenu.classList.add('hide');
+      this.refs.restaurantsMenu.classList.remove('reveal');
+    }
+  }, {
+    key: 'toggleActivityMenu',
+    value: function toggleActivityMenu() {
+      this.refs.activitiesButton.classList.toggle('nav-not-selected');
+      this.refs.activitiesButton.classList.toggle('nav-selected');
+      this.refs.activitiesMenu.classList.toggle('hide');
+      this.refs.activitiesMenu.classList.toggle('reveal');
+    }
+  }, {
+    key: 'hideActivityMenu',
+    value: function hideActivityMenu() {
+      this.refs.activitiesButton.classList.add('nav-not-selected');
+      this.refs.activitiesButton.classList.remove('nav-selected');
+      this.refs.activitiesMenu.classList.add('hide');
+      this.refs.activitiesMenu.classList.remove('reveal');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'row center-text', id: 'navbar' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'nav-button nav-not-selected',
+                ref: 'hotelsButton',
+                onClick: this.hotelButtonClick
+              },
+              'HOTELS'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'subnav-menu hide no-padding', ref: 'hotelsMenu' },
+              this.props.hotels.map(function (hotel) {
+                return _react2.default.createElement(
+                  'li',
+                  {
+                    key: hotel.name,
+                    value: hotel.name,
+                    type: 'hotelListItem'
+                  },
+                  hotel.name
+                );
+              })
+            ),
+            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'restaurantsContent' }),
+            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'activitiesContent' })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'nav-button nav-not-selected',
+                ref: 'restaurantsButton',
+                onClick: this.restaurantButtonClick
+              },
+              'RESTAURANTS'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'subnav-menu hide no-padding', ref: 'restaurantsMenu' },
+              this.props.restaurants.map(function (restaurant) {
+                return _react2.default.createElement(
+                  'li',
+                  {
+                    key: restaurant.name,
+                    value: restaurant.name,
+                    type: 'restaurantListItem'
+                  },
+                  restaurant.name
+                );
+              })
+            ),
+            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'hotelsImage' }),
+            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'activitiesImage' })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+            _react2.default.createElement(
+              'button',
+              {
+                className: 'nav-button nav-not-selected',
+                ref: 'activitiesButton',
+                onClick: this.activityButtonClick
+              },
+              'THINGS TO DO'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'subnav-menu hide no-padding', ref: 'activitiesMenu' },
+              this.props.activities.map(function (activity) {
+                return _react2.default.createElement(
+                  'li',
+                  {
+                    key: activity.name,
+                    value: activity.name,
+                    type: 'activitiesListItem'
+                  },
+                  activity.name
+                );
+              })
+            ),
+            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'hotelsContent' }),
+            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'restaurantsImage' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement('div', { className: 'map col-sm-8 col-xs-12', id: 'map-canvas' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text', id: 'day' },
+            'Day 1:',
+            _react2.default.createElement('hr', { style: { backgroundColor: 'black' } }),
+            _react2.default.createElement(
+              'ul',
+              { className: 'center=text no-padding' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Something'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Something.. else'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'One last something'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            {
+              className: 'center-text',
+              style: {
+                position: 'absolute',
+                bottom: '10px',
+                width: '100%',
+                fontSize: '0.75em',
+                fontWeight: 'normal' }
+            },
+            'HOME | ABOUT | CONTACT'
+          )
+        )
+      );
+    }
+  }]);
+
+  return Trip;
+}(_react2.default.Component);
+
+exports.default = Trip;
 
 /***/ })
 /******/ ]);
