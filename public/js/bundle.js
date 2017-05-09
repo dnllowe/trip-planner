@@ -31013,6 +31013,14 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _store = __webpack_require__(33);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _Trip = __webpack_require__(291);
+
+var _Trip2 = _interopRequireDefault(_Trip);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31027,17 +31035,16 @@ var TripContainer = function (_React$Component) {
   function TripContainer() {
     _classCallCheck(this, TripContainer);
 
-    return _possibleConstructorReturn(this, (TripContainer.__proto__ || Object.getPrototypeOf(TripContainer)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (TripContainer.__proto__ || Object.getPrototypeOf(TripContainer)).call(this));
+
+    _this.state = _store2.default.getState();
+    return _this;
   }
 
   _createClass(TripContainer, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        'Test'
-      );
+      return _react2.default.createElement(_Trip2.default, this.state);
     }
   }]);
 
@@ -31045,6 +31052,146 @@ var TripContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = TripContainer;
+
+/***/ }),
+/* 291 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Trip = function Trip(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    '// NAV BAR',
+    _react2.default.createElement(
+      'div',
+      { className: 'row center-text', id: 'navbar' },
+      _react2.default.createElement(
+        'div',
+        { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+        _react2.default.createElement(
+          'button',
+          { className: 'nav-button nav-not-selected', id: 'hotelsButton' },
+          'HOTELS'
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'subnav-menu hide no-padding', id: 'hotelsMenu' },
+          props.hotels.map(function (hotel) {
+            return _react2.default.createElement(
+              'li',
+              { value: hotel.name, type: 'hotelListItem' },
+              hotel.name
+            );
+          })
+        ),
+        _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'restaurantsContent' }),
+        _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'activitiesContent' })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+        _react2.default.createElement(
+          'button',
+          { className: 'nav-button nav-not-selected', id: 'restaurantsButton' },
+          'RESTAURANTS'
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'subnav-menu hide no-padding', id: 'restaurantsMenu' },
+          props.restaurants.map(function (restaurant) {
+            return _react2.default.createElement(
+              'li',
+              { value: restaurant.name, type: 'restaurantListItem' },
+              restaurant.name
+            );
+          })
+        ),
+        _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'hotelsImage' }),
+        _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'activitiesImage' })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+        _react2.default.createElement(
+          'button',
+          { className: 'nav-button nav-not-selected', id: 'activitiesButton' },
+          'THINGS TO DO'
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'subnav-menu hide no-padding', id: 'activitiesMenu' },
+          props.activities.map(function (activity) {
+            return _react2.default.createElement(
+              'li',
+              { value: activity.name, type: 'activitiesListItem' },
+              activity.name
+            );
+          })
+        ),
+        _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'hotelsContent' }),
+        _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'restaurantsImage' })
+      )
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'row' },
+      _react2.default.createElement('div', { className: 'map col-sm-8 col-xs-12', id: 'map-canvas' }),
+      _react2.default.createElement(
+        'div',
+        { className: 'col-sm-4 col-xs-12 center-text', id: 'day' },
+        'Day 1:',
+        _react2.default.createElement('hr', { style: { backgroundColor: 'black' } }),
+        _react2.default.createElement(
+          'ul',
+          { className: 'center=text no-padding' },
+          _react2.default.createElement(
+            'li',
+            null,
+            'Something'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'Something.. else'
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            'One last something'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        {
+          className: 'center-text',
+          style: {
+            position: 'absolute',
+            bottom: '10px',
+            width: '100%',
+            fontSize: '0.75em',
+            fontWeight: 'normal' }
+        },
+        'HOME | ABOUT | CONTACT'
+      )
+    )
+  );
+};
+
+exports.default = Trip;
 
 /***/ })
 /******/ ]);
