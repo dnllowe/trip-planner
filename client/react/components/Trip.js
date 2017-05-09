@@ -31,7 +31,7 @@ class Trip extends React.Component {
   restaurantButtonClick() {
 
     this.toggleRestaurantMenu()
-    this.hideotelMenu()
+    this.hideHotelMenu()
     this.hideActivityMenu()
   }
 
@@ -125,7 +125,13 @@ class Trip extends React.Component {
 
           {/*RESTAURANTS*/}
           <div className='col-sm-4 col-xs-12 center-text no-padding'>
-            <button className='nav-button nav-not-selected' ref='restaurantsButton'>RESTAURANTS</button>
+            <button
+              className='nav-button nav-not-selected'
+              ref='restaurantsButton'
+              onClick={this.restaurantButtonClick}
+            >
+              RESTAURANTS
+            </button>
 
             <ul className='subnav-menu hide no-padding' ref='restaurantsMenu'>
               {this.props.restaurants.map(restaurant => {
@@ -151,7 +157,13 @@ class Trip extends React.Component {
 
           {/*ACTIVITIES*/}
           <div className='col-sm-4 col-xs-12 center-text no-padding'>
-            <button className='nav-button nav-not-selected' ref='activitiesButton'>THINGS TO DO</button>
+            <button
+              className='nav-button nav-not-selected'
+              ref='activitiesButton'
+              onClick={this.activityButtonClick}
+            >
+              THINGS TO DO
+            </button>
             <ul className='subnav-menu hide no-padding' ref='activitiesMenu'>
               {this.props.activities.map(activity => {
                 return (

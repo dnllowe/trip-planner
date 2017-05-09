@@ -31123,7 +31123,7 @@ var Trip = function (_React$Component) {
     value: function restaurantButtonClick() {
 
       this.toggleRestaurantMenu();
-      this.hideotelMenu();
+      this.hideHotelMenu();
       this.hideActivityMenu();
     }
   }, {
@@ -31227,7 +31227,11 @@ var Trip = function (_React$Component) {
             { className: 'col-sm-4 col-xs-12 center-text no-padding' },
             _react2.default.createElement(
               'button',
-              { className: 'nav-button nav-not-selected', ref: 'restaurantsButton' },
+              {
+                className: 'nav-button nav-not-selected',
+                ref: 'restaurantsButton',
+                onClick: this.restaurantButtonClick
+              },
               'RESTAURANTS'
             ),
             _react2.default.createElement(
@@ -31253,7 +31257,11 @@ var Trip = function (_React$Component) {
             { className: 'col-sm-4 col-xs-12 center-text no-padding' },
             _react2.default.createElement(
               'button',
-              { className: 'nav-button nav-not-selected', ref: 'activitiesButton' },
+              {
+                className: 'nav-button nav-not-selected',
+                ref: 'activitiesButton',
+                onClick: this.activityButtonClick
+              },
               'THINGS TO DO'
             ),
             _react2.default.createElement(
