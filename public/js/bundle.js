@@ -31096,19 +31096,15 @@ var Trip = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Trip.__proto__ || Object.getPrototypeOf(Trip)).call(this));
 
-    _this.hotelsButton = _this.refs.hotelsButton;
-    _this.hotelsMenu = _this.refs.hotelsMenu;
-    _this.restaurantsButton = _this.refs.restaurantsButton;
-    _this.restaurantsMenu = _this.refs.restaurantsMenu;
-    _this.activityButton = _this.refs.activityButton;
-    _this.activityMenu = _this.refs.activityMenu;
-
+    _this.hotelButtonClick = _this.hotelButtonClick.bind(_this);
     _this.toggleHotelMenu = _this.toggleHotelMenu.bind(_this);
     _this.hideHotelMenu = _this.hideHotelMenu.bind(_this);
 
+    _this.restaurantButtonClick = _this.restaurantButtonClick.bind(_this);
     _this.toggleRestaurantMenu = _this.toggleRestaurantMenu.bind(_this);
     _this.hideRestaurantMenu = _this.hideRestaurantMenu.bind(_this);
 
+    _this.activityButtonClick = _this.activityButtonClick.bind(_this);
     _this.toggleActivityMenu = _this.toggleActivityMenu.bind(_this);
     _this.hideActivityMenu = _this.hideActivityMenu.bind(_this);
     return _this;
@@ -31117,7 +31113,7 @@ var Trip = function (_React$Component) {
   _createClass(Trip, [{
     key: 'hotelButtonClick',
     value: function hotelButtonClick() {
-
+      console.log('CLICKED', this.refs);
       this.toggleHotelMenu();
       this.hideRestaurantMenu();
       this.hideActivityMenu();
@@ -31141,59 +31137,58 @@ var Trip = function (_React$Component) {
   }, {
     key: 'toggleHotelMenu',
     value: function toggleHotelMenu() {
-      this.hotelsButton.classList.toggle('nav-not-selected');
-      this.hotelsButton.classList.toggle('nav-selected');
-      this.hotelsMenu.classList.toggle('hide');
-      this.hotelsMenu.classList.toggle('reveal');
+      this.refs.hotelsButton.classList.toggle('nav-not-selected');
+      this.refs.hotelsButton.classList.toggle('nav-selected');
+      this.refs.hotelsMenu.classList.toggle('hide');
+      this.refs.hotelsMenu.classList.toggle('reveal');
     }
   }, {
     key: 'hideHotelMenu',
     value: function hideHotelMenu() {
-      this.hotelsButton.classList.add('nav-not-selected');
-      this.hotelsButton.classList.remove('nav-selected');
-      this.hotelsMenu.classList.add('hide');
-      this.hotelsMenu.classList.remove('reveal');
+      this.refs.hotelsButton.classList.add('nav-not-selected');
+      this.refs.hotelsButton.classList.remove('nav-selected');
+      this.refs.hotelsMenu.classList.add('hide');
+      this.refs.hotelsMenu.classList.remove('reveal');
     }
   }, {
     key: 'toggleRestaurantMenu',
     value: function toggleRestaurantMenu() {
-      this.restaurantsButton.classList.toggle('nav-not-selected');
-      this.restaurantsButton.classList.toggle('nav-selected');
-      this.restaurantsMenu.classList.toggle('hide');
-      this.restaurantsMenu.classList.toggle('reveal');
+      this.refs.restaurantsButton.classList.toggle('nav-not-selected');
+      this.refs.restaurantsButton.classList.toggle('nav-selected');
+      this.refs.restaurantsMenu.classList.toggle('hide');
+      this.refs.restaurantsMenu.classList.toggle('reveal');
     }
   }, {
     key: 'hideRestaurantMenu',
     value: function hideRestaurantMenu() {
-      this.restaurantsButton.classList.add('nav-not-selected');
-      this.restaurantsButton.classList.remove('nav-selected');
-      this.restaurantsMenu.classList.add('hide');
-      this.restaurantsMenu.classList.remove('reveal');
+      this.refs.restaurantsButton.classList.add('nav-not-selected');
+      this.refs.restaurantsButton.classList.remove('nav-selected');
+      this.refs.restaurantsMenu.classList.add('hide');
+      this.refs.restaurantsMenu.classList.remove('reveal');
     }
   }, {
     key: 'toggleActivityMenu',
     value: function toggleActivityMenu() {
-      this.activitiesButton.classList.toggle('nav-not-selected');
-      this.activitiesButton.classList.toggle('nav-selected');
-      this.activitiesMenu.classList.toggle('hide');
-      this.activitiesMenu.classList.toggle('reveal');
+      this.refs.activitiesButton.classList.toggle('nav-not-selected');
+      this.refs.activitiesButton.classList.toggle('nav-selected');
+      this.refs.activitiesMenu.classList.toggle('hide');
+      this.refs.activitiesMenu.classList.toggle('reveal');
     }
   }, {
     key: 'hideActivityMenu',
     value: function hideActivityMenu() {
-      this.activitiesButton.classList.add('nav-not-selected');
-      this.activitiesButton.classList.remove('nav-selected');
-      this.activitiesMenu.classList.add('hide');
-      this.activitiesMenu.classList.remove('reveal');
+      this.refs.activitiesButton.classList.add('nav-not-selected');
+      this.refs.activitiesButton.classList.remove('nav-selected');
+      this.refs.activitiesMenu.classList.add('hide');
+      this.refs.activitiesMenu.classList.remove('reveal');
     }
   }, {
     key: 'render',
     value: function render() {
-      console.log(this.props);
+
       return _react2.default.createElement(
         'div',
         null,
-        '// NAV BAR',
         _react2.default.createElement(
           'div',
           { className: 'row center-text', id: 'navbar' },
@@ -31202,7 +31197,11 @@ var Trip = function (_React$Component) {
             { className: 'col-sm-4 col-xs-12 center-text no-padding' },
             _react2.default.createElement(
               'button',
-              { className: 'nav-button nav-not-selected', ref: 'hotelsButton' },
+              {
+                className: 'nav-button nav-not-selected',
+                ref: 'hotelsButton',
+                onClick: this.hotelButtonClick
+              },
               'HOTELS'
             ),
             _react2.default.createElement(
@@ -31211,7 +31210,11 @@ var Trip = function (_React$Component) {
               this.props.hotels.map(function (hotel) {
                 return _react2.default.createElement(
                   'li',
-                  { value: hotel.name, type: 'hotelListItem' },
+                  {
+                    key: hotel.name,
+                    value: hotel.name,
+                    type: 'hotelListItem'
+                  },
                   hotel.name
                 );
               })
@@ -31233,7 +31236,11 @@ var Trip = function (_React$Component) {
               this.props.restaurants.map(function (restaurant) {
                 return _react2.default.createElement(
                   'li',
-                  { value: restaurant.name, type: 'restaurantListItem' },
+                  {
+                    key: restaurant.name,
+                    value: restaurant.name,
+                    type: 'restaurantListItem'
+                  },
                   restaurant.name
                 );
               })
@@ -31255,7 +31262,11 @@ var Trip = function (_React$Component) {
               this.props.activities.map(function (activity) {
                 return _react2.default.createElement(
                   'li',
-                  { value: activity.name, type: 'activitiesListItem' },
+                  {
+                    key: activity.name,
+                    value: activity.name,
+                    type: 'activitiesListItem'
+                  },
                   activity.name
                 );
               })
