@@ -13203,6 +13203,8 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DestinationSelector = function DestinationSelector(props) {
@@ -13210,6 +13212,7 @@ var DestinationSelector = function DestinationSelector(props) {
   return _react2.default.createElement(
     'div',
     null,
+    props.redirectToTrip && _react2.default.createElement(_reactRouterDom.Redirect, { to: '/trip' }),
     _react2.default.createElement(
       'form',
       { id: 'tripDetails', onSubmit: props.handleSubmit, onChange: props.updateDestination },
@@ -13320,6 +13323,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(6);
@@ -13381,7 +13386,8 @@ var DestinationSelectorContainer = function (_React$Component) {
     _this.state = {
       prompt: null,
       currentSelections: [],
-      whatToDoStyle: { opacity: null }
+      whatToDoStyle: { opacity: null },
+      redirectToTrip: false
     };
 
     _this.totalCheckedBoxes = 0;
@@ -13434,6 +13440,7 @@ var DestinationSelectorContainer = function (_React$Component) {
       });
       updatedUser.destinations = [[this.props.currentDestination.id, 1]]; // Value is array of arrays [ [id, daynumber], ]
       _store2.default.dispatch((0, _updateUser2.default)(updatedUser));
+      this.setState({ redirectToTrip: true });
     }
   }, {
     key: 'updateCheckbox',
@@ -13511,17 +13518,14 @@ var DestinationSelectorContainer = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_DestinationSelector2.default, {
+      return _react2.default.createElement(_DestinationSelector2.default, _extends({}, this.state, {
         handleSubmit: this.handleSubmit,
         updateDestination: this.updateDestination,
         updateCheckbox: this.updateCheckbox,
         destinations: this.props.destinations,
         selection: this.props.currentDestination,
-        activities: this.props.activities,
-        prompt: this.state.prompt,
-        currentSelections: this.state.currentSelections,
-        whatToDoStyle: this.state.whatToDoStyle
-      });
+        activities: this.props.activities
+      }));
     }
   }]);
 
