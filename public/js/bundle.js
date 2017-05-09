@@ -31007,6 +31007,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(6);
@@ -31042,9 +31044,13 @@ var TripContainer = function (_React$Component) {
   }
 
   _createClass(TripContainer, [{
+    key: 'expandHotels',
+    value: function expandHotels() {}
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_Trip2.default, this.state);
+      return _react2.default.createElement(_Trip2.default, _extends({}, this.state, {
+        expandHotels: this.expandHotels }));
     }
   }]);
 
@@ -31064,132 +31070,245 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Trip = function Trip(props) {
-  return _react2.default.createElement(
-    'div',
-    null,
-    '// NAV BAR',
-    _react2.default.createElement(
-      'div',
-      { className: 'row center-text', id: 'navbar' },
-      _react2.default.createElement(
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Trip = function (_React$Component) {
+  _inherits(Trip, _React$Component);
+
+  function Trip() {
+    _classCallCheck(this, Trip);
+
+    var _this = _possibleConstructorReturn(this, (Trip.__proto__ || Object.getPrototypeOf(Trip)).call(this));
+
+    _this.hotelsButton = _this.refs.hotelsButton;
+    _this.hotelsMenu = _this.refs.hotelsMenu;
+    _this.restaurantsButton = _this.refs.restaurantsButton;
+    _this.restaurantsMenu = _this.refs.restaurantsMenu;
+    _this.activityButton = _this.refs.activityButton;
+    _this.activityMenu = _this.refs.activityMenu;
+
+    _this.toggleHotelMenu = _this.toggleHotelMenu.bind(_this);
+    _this.hideHotelMenu = _this.hideHotelMenu.bind(_this);
+
+    _this.toggleRestaurantMenu = _this.toggleRestaurantMenu.bind(_this);
+    _this.hideRestaurantMenu = _this.hideRestaurantMenu.bind(_this);
+
+    _this.toggleActivityMenu = _this.toggleActivityMenu.bind(_this);
+    _this.hideActivityMenu = _this.hideActivityMenu.bind(_this);
+    return _this;
+  }
+
+  _createClass(Trip, [{
+    key: 'hotelButtonClick',
+    value: function hotelButtonClick() {
+
+      this.toggleHotelMenu();
+      this.hideRestaurantMenu();
+      this.hideActivityMenu();
+    }
+  }, {
+    key: 'restaurantButtonClick',
+    value: function restaurantButtonClick() {
+
+      this.toggleRestaurantMenu();
+      this.hideotelMenu();
+      this.hideActivityMenu();
+    }
+  }, {
+    key: 'activityButtonClick',
+    value: function activityButtonClick() {
+
+      this.toggleActivityMenu();
+      this.hideHotelMenu();
+      this.hideRestaurantMenu();
+    }
+  }, {
+    key: 'toggleHotelMenu',
+    value: function toggleHotelMenu() {
+      this.hotelsButton.classList.toggle('nav-not-selected');
+      this.hotelsButton.classList.toggle('nav-selected');
+      this.hotelsMenu.classList.toggle('hide');
+      this.hotelsMenu.classList.toggle('reveal');
+    }
+  }, {
+    key: 'hideHotelMenu',
+    value: function hideHotelMenu() {
+      this.hotelsButton.classList.add('nav-not-selected');
+      this.hotelsButton.classList.remove('nav-selected');
+      this.hotelsMenu.classList.add('hide');
+      this.hotelsMenu.classList.remove('reveal');
+    }
+  }, {
+    key: 'toggleRestaurantMenu',
+    value: function toggleRestaurantMenu() {
+      this.restaurantsButton.classList.toggle('nav-not-selected');
+      this.restaurantsButton.classList.toggle('nav-selected');
+      this.restaurantsMenu.classList.toggle('hide');
+      this.restaurantsMenu.classList.toggle('reveal');
+    }
+  }, {
+    key: 'hideRestaurantMenu',
+    value: function hideRestaurantMenu() {
+      this.restaurantsButton.classList.add('nav-not-selected');
+      this.restaurantsButton.classList.remove('nav-selected');
+      this.restaurantsMenu.classList.add('hide');
+      this.restaurantsMenu.classList.remove('reveal');
+    }
+  }, {
+    key: 'toggleActivityMenu',
+    value: function toggleActivityMenu() {
+      this.activitiesButton.classList.toggle('nav-not-selected');
+      this.activitiesButton.classList.toggle('nav-selected');
+      this.activitiesMenu.classList.toggle('hide');
+      this.activitiesMenu.classList.toggle('reveal');
+    }
+  }, {
+    key: 'hideActivityMenu',
+    value: function hideActivityMenu() {
+      this.activitiesButton.classList.add('nav-not-selected');
+      this.activitiesButton.classList.remove('nav-selected');
+      this.activitiesMenu.classList.add('hide');
+      this.activitiesMenu.classList.remove('reveal');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log(this.props);
+      return _react2.default.createElement(
         'div',
-        { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+        null,
+        '// NAV BAR',
         _react2.default.createElement(
-          'button',
-          { className: 'nav-button nav-not-selected', id: 'hotelsButton' },
-          'HOTELS'
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'subnav-menu hide no-padding', id: 'hotelsMenu' },
-          props.hotels.map(function (hotel) {
-            return _react2.default.createElement(
-              'li',
-              { value: hotel.name, type: 'hotelListItem' },
-              hotel.name
-            );
-          })
-        ),
-        _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'restaurantsContent' }),
-        _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'activitiesContent' })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'col-sm-4 col-xs-12 center-text no-padding' },
-        _react2.default.createElement(
-          'button',
-          { className: 'nav-button nav-not-selected', id: 'restaurantsButton' },
-          'RESTAURANTS'
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'subnav-menu hide no-padding', id: 'restaurantsMenu' },
-          props.restaurants.map(function (restaurant) {
-            return _react2.default.createElement(
-              'li',
-              { value: restaurant.name, type: 'restaurantListItem' },
-              restaurant.name
-            );
-          })
-        ),
-        _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'hotelsImage' }),
-        _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'activitiesImage' })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'col-sm-4 col-xs-12 center-text no-padding' },
-        _react2.default.createElement(
-          'button',
-          { className: 'nav-button nav-not-selected', id: 'activitiesButton' },
-          'THINGS TO DO'
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'subnav-menu hide no-padding', id: 'activitiesMenu' },
-          props.activities.map(function (activity) {
-            return _react2.default.createElement(
-              'li',
-              { value: activity.name, type: 'activitiesListItem' },
-              activity.name
-            );
-          })
-        ),
-        _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'hotelsContent' }),
-        _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'restaurantsImage' })
-      )
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'row' },
-      _react2.default.createElement('div', { className: 'map col-sm-8 col-xs-12', id: 'map-canvas' }),
-      _react2.default.createElement(
-        'div',
-        { className: 'col-sm-4 col-xs-12 center-text', id: 'day' },
-        'Day 1:',
-        _react2.default.createElement('hr', { style: { backgroundColor: 'black' } }),
-        _react2.default.createElement(
-          'ul',
-          { className: 'center=text no-padding' },
+          'div',
+          { className: 'row center-text', id: 'navbar' },
           _react2.default.createElement(
-            'li',
-            null,
-            'Something'
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+            _react2.default.createElement(
+              'button',
+              { className: 'nav-button nav-not-selected', ref: 'hotelsButton' },
+              'HOTELS'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'subnav-menu hide no-padding', ref: 'hotelsMenu' },
+              this.props.hotels.map(function (hotel) {
+                return _react2.default.createElement(
+                  'li',
+                  { value: hotel.name, type: 'hotelListItem' },
+                  hotel.name
+                );
+              })
+            ),
+            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'restaurantsContent' }),
+            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'activitiesContent' })
           ),
           _react2.default.createElement(
-            'li',
-            null,
-            'Something.. else'
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+            _react2.default.createElement(
+              'button',
+              { className: 'nav-button nav-not-selected', ref: 'restaurantsButton' },
+              'RESTAURANTS'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'subnav-menu hide no-padding', ref: 'restaurantsMenu' },
+              this.props.restaurants.map(function (restaurant) {
+                return _react2.default.createElement(
+                  'li',
+                  { value: restaurant.name, type: 'restaurantListItem' },
+                  restaurant.name
+                );
+              })
+            ),
+            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'hotelsImage' }),
+            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'activitiesImage' })
           ),
           _react2.default.createElement(
-            'li',
-            null,
-            'One last something'
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text no-padding' },
+            _react2.default.createElement(
+              'button',
+              { className: 'nav-button nav-not-selected', ref: 'activitiesButton' },
+              'THINGS TO DO'
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'subnav-menu hide no-padding', ref: 'activitiesMenu' },
+              this.props.activities.map(function (activity) {
+                return _react2.default.createElement(
+                  'li',
+                  { value: activity.name, type: 'activitiesListItem' },
+                  activity.name
+                );
+              })
+            ),
+            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'hotelsContent' }),
+            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'restaurantsImage' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement('div', { className: 'map col-sm-8 col-xs-12', id: 'map-canvas' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-4 col-xs-12 center-text', id: 'day' },
+            'Day 1:',
+            _react2.default.createElement('hr', { style: { backgroundColor: 'black' } }),
+            _react2.default.createElement(
+              'ul',
+              { className: 'center=text no-padding' },
+              _react2.default.createElement(
+                'li',
+                null,
+                'Something'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Something.. else'
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'One last something'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            {
+              className: 'center-text',
+              style: {
+                position: 'absolute',
+                bottom: '10px',
+                width: '100%',
+                fontSize: '0.75em',
+                fontWeight: 'normal' }
+            },
+            'HOME | ABOUT | CONTACT'
           )
         )
-      ),
-      _react2.default.createElement(
-        'div',
-        {
-          className: 'center-text',
-          style: {
-            position: 'absolute',
-            bottom: '10px',
-            width: '100%',
-            fontSize: '0.75em',
-            fontWeight: 'normal' }
-        },
-        'HOME | ABOUT | CONTACT'
-      )
-    )
-  );
-};
+      );
+    }
+  }]);
+
+  return Trip;
+}(_react2.default.Component);
 
 exports.default = Trip;
 
