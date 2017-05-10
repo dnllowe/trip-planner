@@ -11,14 +11,9 @@ class TripContainer extends React.Component {
     this.state = store.getState()
   }
 
-  expandHotels() {
-
-  }
-
   render() {
     return (
-      <Trip {...this.state}
-        expandHotels={this.expandHotels}/>
+      <Trip {...this.state} />
     )
   }
 }
