@@ -8,24 +8,54 @@ class Trip extends React.Component {
 
     super()
 
+    this.state = {
+      isHotelOn: false,
+      isRestaurantOn: false,
+      isActivityOn: false,
+      imageUrl: null,
+      content: null
+    }
+
     this.hotelButtonClick = this.hotelButtonClick.bind(this)
     this.toggleHotelMenu = this.toggleHotelMenu.bind(this)
     this.hideHotelMenu = this.hideHotelMenu.bind(this)
+    this.hotelMouseOver = this.hotelMouseOver.bind(this)
 
     this.restaurantButtonClick = this.restaurantButtonClick.bind(this)
     this.toggleRestaurantMenu = this.toggleRestaurantMenu.bind(this)
     this.hideRestaurantMenu = this.hideRestaurantMenu.bind(this)
+    this.restaurantMouseOver = this.restaurantMouseOver.bind(this)
 
     this.activityButtonClick = this.activityButtonClick.bind(this)
     this.toggleActivityMenu = this.toggleActivityMenu.bind(this)
     this.hideActivityMenu = this.hideActivityMenu.bind(this)
+    this.activityMouseOver = this.activityMouseOver.bind(this)
+
+    this.getRandomImage = this.getRandomImage.bind(this)
+    this.getRandomContent = this.getRandomContent.bind(this)
+
+    this.turnOffContent = this.turnOffContent.bind(this)
+    this.turnOffImage = this.turnOffImage.bind(this)
+    this.turnOffExtras = this.turnOffExtras.bind(this)
   }
 
   hotelButtonClick() {
-    console.log('CLICKED', this.refs)
+
     this.toggleHotelMenu()
     this.hideRestaurantMenu()
     this.hideActivityMenu()
+    this.turnOffExtras()
+  }
+
+  hotelMouseOver() {
+
+    this.setState({
+      content: this.getRandomContent('hotel'),
+      imageUrl: this.getRandomImage(),
+      isHotelOn: true,
+      isRestaurantOn: false,
+      isActivityOn: false
+    })
   }
 
   restaurantButtonClick() {
@@ -33,6 +63,18 @@ class Trip extends React.Component {
     this.toggleRestaurantMenu()
     this.hideHotelMenu()
     this.hideActivityMenu()
+    this.turnOffExtras()
+  }
+
+  restaurantMouseOver() {
+
+    this.setState({
+      content: this.getRandomContent('restaurant'),
+      imageUrl: this.getRandomImage(),
+      isRestaurantOn: true,
+      isHotelOn: false,
+      isActivityOn: false
+    })
   }
 
   activityButtonClick() {
@@ -40,6 +82,37 @@ class Trip extends React.Component {
     this.toggleActivityMenu()
     this.hideHotelMenu()
     this.hideRestaurantMenu()
+    this.turnOffExtras()
+  }
+
+  activityMouseOver() {
+
+    this.setState({
+      content: this.getRandomContent('attraction'),
+      imageUrl: this.getRandomImage(),
+      isActivityOn: true,
+      isRestaurantOn: false,
+      isHotelOn: false
+    })
+  }
+
+  turnOffContent() {
+    this.setState({content: null})
+  }
+
+  turnOffImage() {
+    this.setState({imageUrl: null})
+  }
+
+  turnOffExtras() {
+    this.setState({
+      isHotelOn: false,
+      isRestaurantOn: false,
+      isActivityOn: false
+    })
+
+    this.turnOffContent()
+    this.turnOffImage()
   }
 
   toggleHotelMenu() {
@@ -84,6 +157,34 @@ class Trip extends React.Component {
     this.refs.activitiesMenu.classList.remove('reveal')
   }
 
+  getRandomImage() {
+    let index = Math.floor(Math.random() * 9) + 1;
+    return `/images/random/${index}.jpg`;
+  }
+
+  getRandomContent(noun) {
+
+    let randomContent = [
+        `"This is probably the best ${noun} ever. I mean, seriously. Have you *seen* this ${noun}???"`,
+        `"It's a pretty ok ${noun}."`,
+        `"People from all over the world come to this ${noun}. So why don't you?"`,
+        `"There are ${noun}s, and there are *${noun}s*. This is the latter."`,
+        `"5 stars. 10 stars. 100 stars. You can't put a rating on how great this ${noun} is."`,
+        `"... to be honest. It's kinda 'meh'."`,
+        `"One of the best ${noun}s in all of New York City!"`,
+        `"Words can't describe how awesome this ${noun} is!"`,
+        `"We're running out of fake reviews to write..."`,
+        `"l;kasdgjgei adgladg g;lk aoidagig elekgj alge" --The New York Times`,
+        `"This is randomized, so if something positive shows up over something like... a memorial, cut us some slack, ok?"`,
+        `"A must-see ${noun} for anyone visiting New York."`,
+        `"Don't leave New York without visitng this ${noun}."`,
+        `"A+"`
+    ]
+
+    let index = Math.floor(Math.random() * randomContent.length)
+    return randomContent[index]
+  }
+
   render() {
 
     return (
@@ -107,7 +208,7 @@ class Trip extends React.Component {
                   <li
                     key={hotel.name}
                     value={hotel.name}
-                    type='hotelListItem'
+                    onMouseOver={this.hotelMouseOver}
                   >
                     {hotel.name}
                   </li>
@@ -116,10 +217,18 @@ class Trip extends React.Component {
             </ul>
 
             {/*CONTENT FOR RESTAURANT CONTENT ON MENU ROLLOVER*/}
-            <div className='hidden-xs center-text no-padding hide text-1-5em margin-top-100px' id='restaurantsContent'></div>
+            {this.state.isRestaurantOn &&
+              <div className='hidden-xs center-text no-padding text-1-5em margin-top-100px'>
+                {this.state.content}
+              </div>
+            }
 
             {/*CONTENT FOR ACTIVITIES CONTENT ON MENU ROLLOVER*/}
-            <div className='hidden-xs center-text no-padding hide text-1-5em margin-top-100px' id='activitiesContent'></div>
+            {this.state.isActivityOn &&
+              <div className='hidden-xs center-text no-padding text-1-5em margin-top-100px'>
+                {this.state.content}
+              </div>
+            }
           </div>
 
 
@@ -139,7 +248,7 @@ class Trip extends React.Component {
                   <li
                     key={restaurant.name}
                     value={restaurant.name}
-                    type='restaurantListItem'
+                    onMouseOver={this.restaurantMouseOver}
                   >
                     {restaurant.name}
                   </li>
@@ -148,10 +257,20 @@ class Trip extends React.Component {
             </ul>
 
             {/*IMAGE FOR HOTELS CONTENT ON MENU ROLLOVER*/}
-            <img className='subnav-image hidden-xs no-padding hide margin-top-100px' id='hotelsImage'></img>
+            {this.state.isHotelOn &&
+              <img
+                className='subnav-image hidden-xs no-padding margin-top-100px'
+                src={this.state.imageUrl}
+              />
+            }
 
             {/*IMAGE FOR ACTIVITIES CONTENT ON MENU ROLLOVER*/}
-            <img className='subnav-image hidden-xs no-padding hide margin-top-100px' id='activitiesImage'></img>
+            {this.state.isActivityOn &&
+              <img
+                className='subnav-image hidden-xs no-padding margin-top-100px'
+                src={this.state.imageUrl}
+              />
+            }
           </div>
 
 
@@ -170,7 +289,7 @@ class Trip extends React.Component {
                   <li
                     key={activity.name}
                     value={activity.name}
-                    type='activitiesListItem'
+                    onMouseOver={this.activityMouseOver}
                   >
                     {activity.name}
                   </li>)
@@ -178,10 +297,19 @@ class Trip extends React.Component {
             </ul>
 
             {/*CONTENT FOR HOTEL CONTENT ON MENU ROLLOVER*/}
-            <div className='hidden-xs center-text no-padding hide text-1-5em margin-top-100px' id='hotelsContent'></div>
+            {this.state.isHotelOn &&
+              <div className='hidden-xs center-text no-padding text-1-5em margin-top-100px'>
+                {this.state.content}
+              </div>
+            }
 
             {/*IMAGE FOR RESTAURANTS CONTENT ON MENU ROLLOVER*/}
-            <img className='subnav-image hidden-xs no-padding hide margin-top-100px' id='restaurantsImage'></img>
+            {this.state.isRestaurantOn &&
+              <img
+                className='subnav-image hidden-xs no-padding margin-top-100px'
+                src={this.state.imageUrl}
+              />
+            }
           </div>
       </div>
 
