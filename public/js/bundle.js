@@ -12323,6 +12323,12 @@ var App = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'bg-image', style: this.state.bgStyle },
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'h1',
+            { className: 'header', id: 'header' },
+            'Welcome To Trip Planner :)'
+          ),
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
@@ -31011,8 +31017,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(6);
@@ -31048,13 +31052,9 @@ var TripContainer = function (_React$Component) {
   }
 
   _createClass(TripContainer, [{
-    key: 'expandHotels',
-    value: function expandHotels() {}
-  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_Trip2.default, _extends({}, this.state, {
-        expandHotels: this.expandHotels }));
+      return _react2.default.createElement(_Trip2.default, this.state);
     }
   }]);
 
@@ -31096,27 +31096,58 @@ var Trip = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Trip.__proto__ || Object.getPrototypeOf(Trip)).call(this));
 
+    _this.state = {
+      isHotelOn: false,
+      isRestaurantOn: false,
+      isActivityOn: false,
+      imageUrl: null,
+      content: null
+    };
+
     _this.hotelButtonClick = _this.hotelButtonClick.bind(_this);
     _this.toggleHotelMenu = _this.toggleHotelMenu.bind(_this);
     _this.hideHotelMenu = _this.hideHotelMenu.bind(_this);
+    _this.hotelMouseOver = _this.hotelMouseOver.bind(_this);
 
     _this.restaurantButtonClick = _this.restaurantButtonClick.bind(_this);
     _this.toggleRestaurantMenu = _this.toggleRestaurantMenu.bind(_this);
     _this.hideRestaurantMenu = _this.hideRestaurantMenu.bind(_this);
+    _this.restaurantMouseOver = _this.restaurantMouseOver.bind(_this);
 
     _this.activityButtonClick = _this.activityButtonClick.bind(_this);
     _this.toggleActivityMenu = _this.toggleActivityMenu.bind(_this);
     _this.hideActivityMenu = _this.hideActivityMenu.bind(_this);
+    _this.activityMouseOver = _this.activityMouseOver.bind(_this);
+
+    _this.getRandomImage = _this.getRandomImage.bind(_this);
+    _this.getRandomContent = _this.getRandomContent.bind(_this);
+
+    _this.turnOffContent = _this.turnOffContent.bind(_this);
+    _this.turnOffImage = _this.turnOffImage.bind(_this);
+    _this.turnOffExtras = _this.turnOffExtras.bind(_this);
     return _this;
   }
 
   _createClass(Trip, [{
     key: 'hotelButtonClick',
     value: function hotelButtonClick() {
-      console.log('CLICKED', this.refs);
+
       this.toggleHotelMenu();
       this.hideRestaurantMenu();
       this.hideActivityMenu();
+      this.turnOffExtras();
+    }
+  }, {
+    key: 'hotelMouseOver',
+    value: function hotelMouseOver() {
+
+      this.setState({
+        content: this.getRandomContent('hotel'),
+        imageUrl: this.getRandomImage(),
+        isHotelOn: true,
+        isRestaurantOn: false,
+        isActivityOn: false
+      });
     }
   }, {
     key: 'restaurantButtonClick',
@@ -31125,6 +31156,19 @@ var Trip = function (_React$Component) {
       this.toggleRestaurantMenu();
       this.hideHotelMenu();
       this.hideActivityMenu();
+      this.turnOffExtras();
+    }
+  }, {
+    key: 'restaurantMouseOver',
+    value: function restaurantMouseOver() {
+
+      this.setState({
+        content: this.getRandomContent('restaurant'),
+        imageUrl: this.getRandomImage(),
+        isRestaurantOn: true,
+        isHotelOn: false,
+        isActivityOn: false
+      });
     }
   }, {
     key: 'activityButtonClick',
@@ -31133,6 +31177,41 @@ var Trip = function (_React$Component) {
       this.toggleActivityMenu();
       this.hideHotelMenu();
       this.hideRestaurantMenu();
+      this.turnOffExtras();
+    }
+  }, {
+    key: 'activityMouseOver',
+    value: function activityMouseOver() {
+
+      this.setState({
+        content: this.getRandomContent('attraction'),
+        imageUrl: this.getRandomImage(),
+        isActivityOn: true,
+        isRestaurantOn: false,
+        isHotelOn: false
+      });
+    }
+  }, {
+    key: 'turnOffContent',
+    value: function turnOffContent() {
+      this.setState({ content: null });
+    }
+  }, {
+    key: 'turnOffImage',
+    value: function turnOffImage() {
+      this.setState({ imageUrl: null });
+    }
+  }, {
+    key: 'turnOffExtras',
+    value: function turnOffExtras() {
+      this.setState({
+        isHotelOn: false,
+        isRestaurantOn: false,
+        isActivityOn: false
+      });
+
+      this.turnOffContent();
+      this.turnOffImage();
     }
   }, {
     key: 'toggleHotelMenu',
@@ -31183,8 +31262,24 @@ var Trip = function (_React$Component) {
       this.refs.activitiesMenu.classList.remove('reveal');
     }
   }, {
+    key: 'getRandomImage',
+    value: function getRandomImage() {
+      var index = Math.floor(Math.random() * 9) + 1;
+      return '/images/random/' + index + '.jpg';
+    }
+  }, {
+    key: 'getRandomContent',
+    value: function getRandomContent(noun) {
+
+      var randomContent = ['"This is probably the best ' + noun + ' ever. I mean, seriously. Have you *seen* this ' + noun + '???"', '"It\'s a pretty ok ' + noun + '."', '"People from all over the world come to this ' + noun + '. So why don\'t you?"', '"There are ' + noun + 's, and there are *' + noun + 's*. This is the latter."', '"5 stars. 10 stars. 100 stars. You can\'t put a rating on how great this ' + noun + ' is."', '"... to be honest. It\'s kinda \'meh\'."', '"One of the best ' + noun + 's in all of New York City!"', '"Words can\'t describe how awesome this ' + noun + ' is!"', '"We\'re running out of fake reviews to write..."', '"l;kasdgjgei adgladg g;lk aoidagig elekgj alge" --The New York Times', '"This is randomized, so if something positive shows up over something like... a memorial, cut us some slack, ok?"', '"A must-see ' + noun + ' for anyone visiting New York."', '"Don\'t leave New York without visitng this ' + noun + '."', '"A+"'];
+
+      var index = Math.floor(Math.random() * randomContent.length);
+      return randomContent[index];
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
 
       return _react2.default.createElement(
         'div',
@@ -31213,14 +31308,22 @@ var Trip = function (_React$Component) {
                   {
                     key: hotel.name,
                     value: hotel.name,
-                    type: 'hotelListItem'
+                    onMouseOver: _this2.hotelMouseOver
                   },
                   hotel.name
                 );
               })
             ),
-            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'restaurantsContent' }),
-            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'activitiesContent' })
+            this.state.isRestaurantOn && _react2.default.createElement(
+              'div',
+              { className: 'hidden-xs center-text no-padding text-1-5em margin-top-100px' },
+              this.state.content
+            ),
+            this.state.isActivityOn && _react2.default.createElement(
+              'div',
+              { className: 'hidden-xs center-text no-padding text-1-5em margin-top-100px' },
+              this.state.content
+            )
           ),
           _react2.default.createElement(
             'div',
@@ -31243,14 +31346,20 @@ var Trip = function (_React$Component) {
                   {
                     key: restaurant.name,
                     value: restaurant.name,
-                    type: 'restaurantListItem'
+                    onMouseOver: _this2.restaurantMouseOver
                   },
                   restaurant.name
                 );
               })
             ),
-            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'hotelsImage' }),
-            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'activitiesImage' })
+            this.state.isHotelOn && _react2.default.createElement('img', {
+              className: 'subnav-image hidden-xs no-padding margin-top-100px',
+              src: this.state.imageUrl
+            }),
+            this.state.isActivityOn && _react2.default.createElement('img', {
+              className: 'subnav-image hidden-xs no-padding margin-top-100px',
+              src: this.state.imageUrl
+            })
           ),
           _react2.default.createElement(
             'div',
@@ -31273,14 +31382,21 @@ var Trip = function (_React$Component) {
                   {
                     key: activity.name,
                     value: activity.name,
-                    type: 'activitiesListItem'
+                    onMouseOver: _this2.activityMouseOver
                   },
                   activity.name
                 );
               })
             ),
-            _react2.default.createElement('div', { className: 'hidden-xs center-text no-padding hide text-1-5em margin-top-100px', id: 'hotelsContent' }),
-            _react2.default.createElement('img', { className: 'subnav-image hidden-xs no-padding hide margin-top-100px', id: 'restaurantsImage' })
+            this.state.isHotelOn && _react2.default.createElement(
+              'div',
+              { className: 'hidden-xs center-text no-padding text-1-5em margin-top-100px' },
+              this.state.content
+            ),
+            this.state.isRestaurantOn && _react2.default.createElement('img', {
+              className: 'subnav-image hidden-xs no-padding margin-top-100px',
+              src: this.state.imageUrl
+            })
           )
         ),
         _react2.default.createElement(
